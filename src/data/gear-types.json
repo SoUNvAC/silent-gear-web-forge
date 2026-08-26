@@ -1,0 +1,588 @@
+{
+  "version": "3.6.6",
+  "source": "data/gear-types-reference.md",
+  "baseValue": 0,
+  "gearTypes": {
+    "all": {
+      "parent": null,
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL"
+      ]
+    },
+    "tool": {
+      "parent": "all",
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL",
+        "HARVEST",
+        "ATTACK"
+      ]
+    },
+    "weapon": {
+      "parent": "tool"
+    },
+    "melee_weapon": {
+      "parent": "weapon"
+    },
+    "ranged_weapon": {
+      "parent": "weapon",
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL",
+        "PROJECTILE"
+      ]
+    },
+    "hybrid_weapon": {
+      "parent": "weapon",
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL",
+        "ATTACK",
+        "PROJECTILE"
+      ]
+    },
+    "harvest_tool": {
+      "parent": "tool"
+    },
+    "armor": {
+      "parent": "all",
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL",
+        "ARMOR"
+      ]
+    },
+    "curio": {
+      "parent": "all",
+      "propertyGroups": [
+        "SPECIAL"
+      ]
+    },
+    "projectile": {
+      "parent": "all",
+      "propertyGroups": [
+        "SPECIAL",
+        "GENERAL",
+        "PROJECTILE"
+      ]
+    },
+    "sword": {
+      "parent": "melee_weapon",
+      "mainPart": "sword_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "katana": {
+      "parent": "melee_weapon",
+      "mainPart": "katana_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "machete": {
+      "parent": "melee_weapon",
+      "mainPart": "machete_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "knife": {
+      "parent": "melee_weapon",
+      "mainPart": "knife_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "dagger": {
+      "parent": "melee_weapon",
+      "mainPart": "dagger_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "spear": {
+      "parent": "melee_weapon",
+      "mainPart": "spear_tip",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "mace": {
+      "parent": "melee_weapon",
+      "mainPart": "mace_core",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "trident": {
+      "parent": "hybrid_weapon",
+      "mainPart": "trident_prongs",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "bow": {
+      "parent": "ranged_weapon",
+      "mainPart": "bow_limbs",
+      "requiredParts": [
+        "main",
+        "rod",
+        "cord"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating",
+        "cord"
+      ],
+      "durabilityStat": "DURABILITY",
+      "animationFrames": 4
+    },
+    "crossbow": {
+      "parent": "ranged_weapon",
+      "mainPart": "crossbow_limbs",
+      "requiredParts": [
+        "main",
+        "rod",
+        "cord"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating",
+        "cord"
+      ],
+      "durabilityStat": "DURABILITY",
+      "animationFrames": 4
+    },
+    "slingshot": {
+      "parent": "ranged_weapon",
+      "mainPart": "slingshot_limbs",
+      "requiredParts": [
+        "main",
+        "rod",
+        "cord"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating",
+        "cord"
+      ],
+      "durabilityStat": "DURABILITY",
+      "animationFrames": 4
+    },
+    "pickaxe": {
+      "parent": "harvest_tool",
+      "mainPart": "pickaxe_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "shovel": {
+      "parent": "harvest_tool",
+      "mainPart": "shovel_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "axe": {
+      "parent": "harvest_tool",
+      "mainPart": "axe_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "hoe": {
+      "parent": "harvest_tool",
+      "mainPart": "hoe_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "hammer": {
+      "parent": "pickaxe",
+      "mainPart": "hammer_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "excavator": {
+      "parent": "shovel",
+      "mainPart": "excavator_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "saw": {
+      "parent": "axe",
+      "mainPart": "saw_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "sickle": {
+      "parent": "harvest_tool",
+      "mainPart": "sickle_blade",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "mattock": {
+      "parent": "harvest_tool",
+      "mainPart": "mattock_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "paxel": {
+      "parent": "harvest_tool",
+      "mainPart": "paxel_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "prospector_hammer": {
+      "parent": "pickaxe",
+      "mainPart": "prospector_hammer_head",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "shears": {
+      "parent": "harvest_tool",
+      "mainPart": "shear_blades",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "fishing_rod": {
+      "parent": "tool",
+      "mainPart": "fishing_reel_and_hook",
+      "requiredParts": [
+        "main",
+        "rod",
+        "cord"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating",
+        "cord"
+      ],
+      "durabilityStat": "DURABILITY"
+    },
+    "shield": {
+      "parent": "tool",
+      "mainPart": "shield_plate",
+      "requiredParts": [
+        "main",
+        "rod"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "grip",
+        "coating"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 22.466666666666665
+    },
+    "helmet": {
+      "parent": "armor",
+      "mainPart": "helmet_plates",
+      "requiredParts": [
+        "main"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating",
+        "lining"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 11
+    },
+    "chestplate": {
+      "parent": "armor",
+      "mainPart": "chestplate_plates",
+      "requiredParts": [
+        "main"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating",
+        "lining"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 16
+    },
+    "leggings": {
+      "parent": "armor",
+      "mainPart": "legging_plates",
+      "requiredParts": [
+        "main"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating",
+        "lining"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 15
+    },
+    "boots": {
+      "parent": "armor",
+      "mainPart": "boot_plates",
+      "requiredParts": [
+        "main"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating",
+        "lining"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 13
+    },
+    "elytra": {
+      "parent": "armor",
+      "mainPart": "elytra_wings",
+      "requiredParts": [
+        "main",
+        "binding"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "lining"
+      ],
+      "durabilityStat": "ARMOR_DURABILITY",
+      "armorDurabilityMultiplier": 25
+    },
+    "ring": {
+      "parent": "curio",
+      "mainPart": "ring_shank",
+      "requiredParts": [
+        "main",
+        "setting"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating"
+      ]
+    },
+    "bracelet": {
+      "parent": "curio",
+      "mainPart": "bracelet_band",
+      "requiredParts": [
+        "main",
+        "setting"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating"
+      ]
+    },
+    "necklace": {
+      "parent": "curio",
+      "mainPart": "necklace_chain",
+      "requiredParts": [
+        "main",
+        "setting"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating"
+      ]
+    },
+    "arrow": {
+      "parent": "projectile",
+      "mainPart": "arrow_heads",
+      "requiredParts": [
+        "main",
+        "rod",
+        "fletching"
+      ],
+      "addableSlots": [
+        "tip",
+        "binding",
+        "coating",
+        "fletching"
+      ],
+      "durabilityStat": "DURABILITY"
+    }
+  }
+}

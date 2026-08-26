@@ -1,0 +1,27 @@
+{
+  "name": "sgear-simulator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Minecraft Silent Gear Web Tool Builder / Optimizer —— 纯 TS 核心 + 薄 UI",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:data": "tsx scripts/build-gear-types.ts",
+    "build:web-data": "tsx scripts/build-web-data.ts",
+    "report": "tsx scripts/data-report.ts",
+    "tsv:diff": "tsx scripts/tsv-slot-diff.ts",
+    "typecheck:web": "tsc -p web/tsconfig.web.json --noEmit",
+    "dev": "vite",
+    "build": "npm run build:web-data && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "source": "data/new_1.markdown §4.5（TraitsProvider.java:360-457）",
+  "formula": "addedValue = base_multiplier × level × damageRatio(若 multiply_damage_ratio) × base快照值(若 multiply_original_value)；每属性聚合成一个 ADD 修正进 Pass3",
+  "traits": {
+    "silentgear:accelerate": {
+      "harvest_speed": { "base_multiplier": 2.0, "multiply_damage_ratio": true, "multiply_original_value": false },
+      "attack_speed": { "base_multiplier": 0.01, "multiply_damage_ratio": true, "multiply_original_value": false },
+      "draw_speed": { "base_multiplier": 0.01, "multiply_damage_ratio": true, "multiply_original_value": false }
+    },
+    "silentgear:bulky": {
+      "attack_speed": { "base_multiplier": -0.075, "multiply_damage_ratio": true, "multiply_original_value": false }
+    },
+    "silentgear:chipping": {
+      "armor": { "base_multiplier": -0.075, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "harvest_speed": { "base_multiplier": 0.25, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:crushing": {
+      "armor": { "base_multiplier": 0.05, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "attack_damage": { "base_multiplier": -0.1667, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:dulling": {
+      "attack_damage": { "base_multiplier": -1.0, "multiply_damage_ratio": true, "multiply_original_value": false },
+      "harvest_speed": { "base_multiplier": -1.0, "multiply_damage_ratio": true, "multiply_original_value": false }
+    },
+    "silentgear:eroded": {
+      "attack_damage": { "base_multiplier": -0.15, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "harvest_speed": { "base_multiplier": 0.15, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:hard": {
+      "harvest_speed": { "base_multiplier": 0.05, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "ranged_damage": { "base_multiplier": -0.1, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:jagged": {
+      "attack_damage": { "base_multiplier": 0.1667, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "ranged_damage": { "base_multiplier": -0.1667, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:organic": {
+      "enchantment_value": { "base_multiplier": 0.1, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "magic_damage": { "base_multiplier": -0.15, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:sharp": {
+      "harvest_speed": { "base_multiplier": 0.125, "multiply_damage_ratio": true, "multiply_original_value": true },
+      "attack_damage": { "base_multiplier": 0.125, "multiply_damage_ratio": true, "multiply_original_value": true }
+    },
+    "silentgear:soft": {
+      "harvest_speed": { "base_multiplier": -0.15, "multiply_damage_ratio": true, "multiply_original_value": true }
+    }
+  }
+}

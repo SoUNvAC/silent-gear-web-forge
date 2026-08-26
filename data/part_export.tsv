@@ -1,0 +1,45 @@
+Name	ID	Type	Tier	Durability	Armor Durability	Repair Efficiency	Repair Bonus	Enchantment Value	Charging Value	Rarity	Harvest Speed	Reach Distance	Attack Damage	Magic Damage	Attack Speed	Attack Reach	Ranged Damage	Ranged Speed	Projectile Speed	Projectile Accuracy	Armor	Armor Toughness	Knockback Resistance	Magic Armor	TraitsAir	silentgear:adornment	silentgear:adornment	-1
+Air	silentgear:arrow_heads	silentgear:main	-1			75%																						
+Air	silentgear:axe_head	silentgear:main	-1			100%							5		-3													
+Air	silentgear:binding	silentgear:binding	-1																									
+Air	silentgear:boot_plates	silentgear:main	-1			100%																						
+Air	silentgear:bow_limbs	silentgear:main	-1			100%		-45%									2	1										
+Air	silentgear:bowstring	silentgear:cord	-1																									
+Air	silentgear:bracelet_band	silentgear:main	-1																									
+Air	silentgear:chestplate_plates	silentgear:main	-1			100%																						
+Air	silentgear:coating	silentgear:coating	-1																									
+Air	silentgear:crossbow_limbs	silentgear:main	-1			100%		-45%									2	1										
+Air	silentgear:dagger_blade	silentgear:main	-1			200%							"-50%, +2"		-1.2													
+Air	silentgear:elytra_wings	silentgear:main	-1			100%															"-65%, -3.5"							
+Air	silentgear:excavator_head	silentgear:main	-1	100%		200%		-50%			-50%		2		-3													
+Air	silentgear:fishing_reel_and_hook	silentgear:main	-1	-50%		125%		-75%																				
+Air	silentgear:fletching	silentgear:fletching	-1																									
+Air	silentgear:grip	silentgear:grip	-1																									
+Air	silentgear:hammer_head	silentgear:main	-1	100%		150%		-50%			-50%		4		-3.2													
+Air	silentgear:helmet_plates	silentgear:main	-1			100%																						
+Air	silentgear:hoe_head	silentgear:main	-1			100%							-100%		-1													
+Air	silentgear:katana_blade	silentgear:main	-1	13%		100%		-10%					4		-2.6													
+Air	silentgear:knife_blade	silentgear:main	-1	25%		200%							"-50%, +1"		-1.6													
+Air	silentgear:legging_plates	silentgear:main	-1			100%																						
+Air	silentgear:lining	silentgear:lining	-1																									
+Air	silentgear:machete_blade	silentgear:main	-1			100%							2		-2.2													
+Air	silentgear:mattock_head	silentgear:main	-1	25%		125%		-25%			-25%		1		-2.6													
+Red Card	silentgear:misc/red_card	silentgear:misc_upgrade	-1							-5															Red Card			
+Road Maker Upgrade	silentgear:misc/road_maker	silentgear:misc_upgrade	-1	10%						10															Road Maker			
+Spoon Upgrade	silentgear:misc/spoon	silentgear:misc_upgrade	-1	20%						10															Spoon			
+Wide Plate	silentgear:misc/wide_plate	silentgear:misc_upgrade	-1	10%						10															Widen I			
+Air	silentgear:paxel_head	silentgear:main	-1	35%		120%		-30%			-20%		3		-3													
+Air	silentgear:pickaxe_head	silentgear:main	-1			100%							1		-2.8													
+Air	silentgear:prospector_hammer_head	silentgear:main	-1	-25%		150%		-25%			-25%		2		-2.6													
+Air	silentgear:ring_shank	silentgear:main	-1																									
+Air	silentgear:rod	silentgear:rod	-1																									
+Air	silentgear:saw_blade	silentgear:main	-1	100%		150%		-50%			-75%		2		-2.4													
+Air	silentgear:shears_blades	silentgear:main	-1	-5%		125%																						
+Air	silentgear:shield_plate	silentgear:main	-1			100%																						
+Air	silentgear:shovel_head	silentgear:main	-1			200%							1.5		-3													
+Air	silentgear:sickle_blade	silentgear:main	-1			100%							1		-1.8													
+Air	silentgear:slingshot_limbs	silentgear:main	-1			200%		-65%									"-75%, +0"	1.5										
+Air	silentgear:spear_tip	silentgear:main	-1	-20%		125%							3		-2.7	1												
+Air	silentgear:sword_blade	silentgear:main	-1			100%							3		-2.4													
+Air	silentgear:tip	silentgear:tip	-1																									
+Air	silentgear:trident_prongs	silentgear:main	-1			100%							4		-2.9													

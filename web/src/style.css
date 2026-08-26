@@ -1,0 +1,622 @@
+/* Silent Gear Tool Builder —— MC 深色像素 UI（无图片，纯 CSS 离线可用） */
+
+/* Minecraft 像素字体（本地 woff2；无 CJK 字形，中文回退系统黑体） */
+@font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/minecraft.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --bg: #131313;
+  --bg-dark: #0c0c0c;
+  --stone: #3c3c3c;
+  --stone-light: #6b6b6b;
+  --stone-dark: #232323;
+  --slot-bg: #181818;
+  --slot-top: #0a0a0a;
+  --slot-bottom: #3a3a3a;
+  --panel-title-bg: #2a2a2a;
+  --text: #e6e6e6;
+  --text-dim: #9a9a9a;
+  --border: #000;
+  --grass: #5b8731;
+  --grass-dark: #47702a;
+  --grass-light: #77b548;
+  --dirt: #79553a;
+  --gold: #ffd34d;
+  --gold-dim: #b8922f;
+  --green: #6fd36f;
+  --red: #d0574f;
+  --selected: #fff7d0;
+  /* MC 像素字体优先；中文回退系统黑体（MC 字体不含 CJK 字形） */
+  --font: "Minecraft", "Microsoft YaHei", "微软雅黑", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+/* 表单控件不继承 font-family，显式统一 */
+input, button, select, textarea { font-family: inherit; }
+
+body {
+  background: var(--bg);
+  background-image:
+    repeating-linear-gradient(45deg, var(--bg) 0 12px, var(--bg-dark) 12px 24px);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+}
+
+/* ================= 顶栏 ================= */
+
+.app-header { border-bottom: 3px solid var(--border); }
+
+.grass-bar {
+  height: 12px;
+  background:
+    linear-gradient(180deg, var(--grass-light) 0 5px, var(--grass) 5px 9px, var(--dirt) 9px 12px);
+  border-bottom: 2px solid var(--border);
+}
+
+.title-block { padding: 10px 16px; background: var(--panel-title-bg); border-bottom: 2px solid var(--border); }
+
+.blocky-title {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000, 3px 3px 0 #2a2a2a;
+}
+
+.title-sub { font-size: 12px; color: var(--text-dim); }
+
+/* ================= 布局 ================= */
+
+.best-build-bar { max-width: 1500px; margin: 10px auto 0; }
+.tool-selector { max-width: 1500px; margin: 10px auto 0; }
+.inventory { max-width: 1500px; margin: 10px auto 12px; }
+
+.app-main {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  gap: 10px;
+  max-width: 1500px;
+  margin: 10px auto 0;
+  padding: 0 12px;
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .app-main { grid-template-columns: 1fr 1fr; }
+  #material-selector { grid-column: 1 / -1; grid-row: 1; }
+  #assembly { grid-row: 2; }
+  #preview { grid-row: 2; }
+}
+
+@media (max-width: 720px) {
+  .app-main { grid-template-columns: 1fr; }
+  #material-selector { grid-column: auto; grid-row: auto; }
+  #assembly { grid-row: auto; }
+  #preview { grid-row: auto; }
+}
+
+.boot { padding: 30px; text-align: center; color: var(--text-dim); }
+.boot-text { animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0.4; } }
+
+/* ================= MC 面板（深色 bevel） ================= */
+
+.panel {
+  background: var(--stone);
+  color: var(--text);
+  border: 3px solid var(--border);
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+  min-width: 0;
+}
+
+.panel-title {
+  background: var(--panel-title-bg);
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  padding: 4px 8px;
+  font-weight: bold;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.panel-title .hint { font-weight: normal; font-size: 11px; color: var(--text-dim); }
+
+.panel-body { padding: 8px; }
+
+/* ================= MC 控件 ================= */
+
+select, input[type="number"], input[type="text"], input[type="search"] {
+  background: var(--slot-bg);
+  color: var(--text);
+  border: 2px solid var(--border);
+  box-shadow:
+    inset 0 2px 0 var(--slot-top),
+    inset 0 -2px 0 var(--slot-bottom);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 2px 4px;
+  min-width: 0;
+  outline: none;
+}
+
+select option { background: #4a4a4a; color: var(--text); }
+
+.mc-btn {
+  background: var(--stone);
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  border: 2px solid var(--border);
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 3px 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.mc-btn:hover { background: var(--stone-light); }
+.mc-btn:active {
+  box-shadow:
+    inset -2px -2px 0 var(--stone-light),
+    inset 2px 2px 0 var(--stone-dark);
+}
+.mc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.mc-btn.primary { background: var(--grass); }
+.mc-btn.primary:hover { background: var(--grass-light); }
+
+/* ================= 像素贴图 ================= */
+
+.mc-texture {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: block;
+}
+
+/* ================= 顶栏 Best Build（PvZ 卡牌队列） ================= */
+
+.best-build-bar .panel-body { position: relative; }
+
+/* 种子槽横排 */
+.pz-queue {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  padding: 12px 4px 6px;
+  overflow-x: auto;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 2px solid var(--border);
+  border-bottom: 2px solid var(--border);
+}
+
+/* 卡片：序号角标 + 合成图标 + 总分（PvZ 成本位） */
+.pz-card {
+  position: relative;
+  flex: 0 0 auto;
+  width: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: #2d2d2d;
+  border: 2px solid var(--border);
+  box-shadow: inset 2px 2px 0 #4a4a4a, inset -2px -2px 0 #161616;
+  padding: 6px 2px 3px;
+  cursor: pointer;
+}
+.pz-card:hover { background: #3a3a3a; box-shadow: inset 2px 2px 0 #555, 0 0 0 2px var(--gold); }
+.pz-icon { width: 40px; height: 40px; display: grid; place-items: center; }
+.pz-icon img { image-rendering: pixelated; }
+
+.pz-rank {
+  position: absolute;
+  top: -7px; left: -5px;
+  min-width: 17px; height: 17px;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: bold;
+  background: #565656; color: #e6e6e6;
+  border: 2px solid var(--border);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+.pz-rank.r1 { background: var(--gold); color: #3a2c00; }
+
+.pz-cost {
+  font-size: 11px;
+  color: var(--gold);
+  background: #1a1a1a;
+  border: 1px solid var(--border);
+  padding: 0 4px;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+.pz-cost::before { content: '★'; margin-right: 3px; }
+
+/* 充能等级角标（跨充能探索模式下每卡标出其 charge 等级） */
+.pz-charge {
+  position: absolute;
+  top: -7px; right: -5px;
+  min-width: 24px; height: 17px;
+  display: grid; place-items: center;
+  font-size: 10px; font-weight: bold;
+  background: #123c5c; color: #8fd6ff;
+  border: 2px solid var(--border);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+}
+
+/* 品级 + 充能模式选择行（Best Build 顶部；MC 主题小 select） */
+.bb-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 2px 4px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.bb-controls select {
+  min-width: 74px;
+  background: #1a1a1a; color: #eee;
+  border: 2px solid var(--border);
+  box-shadow: inset 1px 1px 0 #000;
+  font-size: 12px;
+  padding: 1px 2px;
+}
+/* 「考虑附属加成」勾选框（已接线：附属槽全组合搜索） */
+.bb-check {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 6px;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+.bb-check input[type='checkbox'] {
+  width: 13px; height: 13px;
+  accent-color: var(--grass);
+}
+.bb-check:hover .mc-tooltip { display: block; }
+
+/* 刷新按钮：拥有权变化（库存点灭材质）后强制重算；MC bevel 同款 */
+.bb-btn {
+  margin-left: auto;
+  background: var(--stone);
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  border: 2px solid var(--border);
+  box-shadow:
+    inset 2px 2px 0 var(--stone-light),
+    inset -2px -2px 0 var(--stone-dark);
+  font-size: 12px;
+  padding: 2px 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.bb-btn:hover:not(:disabled) { background: var(--stone-light); }
+.bb-btn:active:not(:disabled) {
+  box-shadow:
+    inset -2px -2px 0 var(--stone-light),
+    inset 2px 2px 0 var(--stone-dark);
+}
+.bb-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 悬浮详情（MC tooltip 风格，卡片下方；挂 body，fixed 免被队列 overflow 裁掉） */
+.pz-popover {
+  display: none;
+  position: fixed;
+  z-index: 40;
+  min-width: 230px;
+  max-width: 340px;
+  background: #100010;
+  color: #fff;
+  border: 2px solid var(--border);
+  box-shadow: inset 1px 1px 0 #4a004a, 2px 2px 0 rgba(0, 0, 0, 0.6);
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+.pz-popover .pp-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.pz-popover .pp-type { color: #fff; font-size: 13px; text-shadow: 1px 1px 0 #000; }
+.pz-popover .pp-score { color: var(--gold); white-space: nowrap; }
+.pz-popover .pp-charge { color: #8fd6ff; white-space: nowrap; font-size: 10px; }
+.pz-popover .pp-profile { color: var(--text-dim); font-size: 10px; margin: 1px 0 4px; }
+.pz-popover .pp-sec { color: var(--gold-dim); font-size: 10px; margin-top: 6px; border-bottom: 1px solid #333; }
+.pz-popover .pp-row { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
+.pz-popover .pp-row img { width: 16px; height: 16px; image-rendering: pixelated; }
+.pz-popover .pp-k { color: var(--text-dim); }
+.pz-popover .pp-v { color: #fff; }
+.pz-popover .pp-syn { color: #7ee787; font-size: 11px; margin-left: auto; }
+.pz-popover .pp-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+.pz-popover .pp-stat { display: flex; flex-direction: column; align-items: center; min-width: 52px; }
+.pz-popover .pp-stat .k { color: var(--text-dim); font-size: 9px; }
+.pz-popover .pp-stat .v { color: #fff; font-size: 12px; }
+.pz-popover .pp-traits { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; margin-top: 2px; }
+.pz-popover .pp-trait {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: #1a1a1a; border: 1px solid var(--border); padding: 1px 4px; font-size: 10px; color: #ddd;
+}
+.pz-popover .pp-trait img { width: 10px; height: 10px; image-rendering: pixelated; }
+
+/* ================= 类型选择器 ================= */
+
+.tool-selector .panel-body { display: flex; flex-direction: column; gap: 5px; }
+
+/* 家族行：标签 + 按钮横向流动，自动换行填满整行（无右留白，行高即按钮高） */
+.family-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.family-label {
+  color: var(--gold-dim);
+  font-size: 11px;
+  text-shadow: 1px 1px 0 #000;
+  padding-right: 6px;
+  white-space: nowrap;
+}
+
+.tool-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--stone);
+  color: var(--text);
+  border: 2px solid var(--border);
+  box-shadow: inset 2px 2px 0 var(--stone-light), inset -2px -2px 0 var(--stone-dark);
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 2px 7px 2px 3px;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+}
+.tool-btn img { width: 20px; height: 20px; }
+.tool-btn:hover { background: var(--stone-light); }
+.tool-btn.active {
+  background: #52524a;
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
+/* ================= 装配槽 ================= */
+
+.slot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+@media (max-width: 400px) { .slot-grid { grid-template-columns: 1fr; } }
+
+/* 装配分节标题（核心部件 / 附属部件 / 升级部件） */
+.slot-section-title {
+  margin: 8px 0 4px;
+  color: var(--gold-dim);
+  font-size: 11px;
+  text-shadow: 1px 1px 0 #000;
+  border-bottom: 1px solid #555;
+  padding-bottom: 2px;
+}
+.slot-section-title:first-child { margin-top: 0; }
+
+/* 升级部件 toggle chips（misc_upgrade，upgrade 通道） */
+.upgrade-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 4px; }
+.upgrade-chip {
+  position: relative;
+  display: inline-flex; align-items: center;
+  background: #2d2d2d; color: var(--text-dim);
+  border: 2px solid var(--border);
+  box-shadow: inset 2px 2px 0 #4a4a4a, inset -2px -2px 0 #161616;
+  font-family: var(--font); font-size: 12px;
+  padding: 2px 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.upgrade-chip:hover { background: #383838; }
+.upgrade-chip.on { background: #3a5a2a; color: #e6ffe6; box-shadow: 0 0 0 2px var(--gold); }
+.upgrade-chips.static .upgrade-chip { cursor: default; }
+.upgrade-chip:hover .mc-tooltip { display: block; }
+
+/* 预览升级部件说明行 */
+.upgrades-note { margin-top: 8px; border-top: 1px solid #333; padding-top: 2px; }
+
+.slot {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 4px;
+  cursor: pointer;
+  background: #2d2d2d;
+  border: 2px solid var(--border);
+  user-select: none;
+}
+.slot:hover { background: #383838; }
+.slot.selected { box-shadow: 0 0 0 2px var(--gold); }
+
+.slot-box {
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  background: var(--slot-bg);
+  border: 2px solid var(--border);
+  box-shadow: inset 2px 2px 0 var(--slot-top), inset -2px -2px 0 var(--slot-bottom);
+}
+.slot-box img { width: 36px; height: 36px; }
+.slot-box .slot-empty { color: #3d3d3d; font-size: 20px; line-height: 1; }
+
+.slot-label { font-size: 11px; color: var(--text-dim); }
+.slot-material { font-size: 11px; color: var(--text); text-align: center; min-height: 14px; }
+.slot-grade { color: var(--grass); font-weight: bold; }
+
+/* MC 风格 tooltip（悬浮槽位显示材质名 + 色） */
+.mc-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #100010;
+  color: #fff;
+  border: 2px solid var(--border);
+  box-shadow: inset 1px 1px 0 #4a004a, 2px 2px 0 rgba(0,0,0,.6);
+  padding: 4px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 30;
+}
+.slot:hover .mc-tooltip { display: block; }
+
+/* ================= 材料选择器 ================= */
+
+.mat-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+.mat-search { flex: 1; min-width: 140px; }
+
+.filter-toggle { display: flex; gap: 2px; }
+.filter-toggle .mc-btn { padding: 2px 8px; font-size: 11px; }
+.filter-toggle .mc-btn.on { background: var(--grass); }
+
+.mat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 6px; max-height: 480px; overflow-y: auto; padding-right: 4px; }
+
+.mat-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  background: #2d2d2d;
+  border: 2px solid var(--border);
+  padding: 5px 3px;
+  cursor: pointer;
+  font-family: var(--font);
+  color: var(--text);
+  font-size: 11px;
+  text-align: center;
+  user-select: none;
+  min-height: 68px;
+}
+.mat-btn img { width: 32px; height: 32px; }
+.mat-name { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.mat-name .zh { white-space: nowrap; font-size: 12px; }
+.mat-name .en {
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+  font-size: 9px; color: var(--text-dim); letter-spacing: 0.5px;
+}
+.mat-btn:hover { background: #3a3a3a; }
+.mat-btn.selected { box-shadow: 0 0 0 2px var(--gold); background: #4a4420; }
+.mat-btn.unowned img { filter: grayscale(1) opacity(0.4); }
+.mat-btn.unowned { opacity: 0.8; }
+
+.mat-empty { color: var(--text-dim); padding: 12px; text-align: center; }
+
+.mat-hint { color: var(--text-dim); font-size: 11px; margin-bottom: 6px; }
+
+/* ================= 预览 ================= */
+
+.preview-icon {
+  width: 96px; height: 96px;
+  margin: 6px auto;
+  display: grid; place-items: center;
+  background: var(--slot-bg);
+  border: 3px solid var(--border);
+  box-shadow: inset 3px 3px 0 var(--slot-top), inset -3px -3px 0 var(--slot-bottom);
+}
+.preview-icon img { width: 72px; height: 72px; }
+
+.rating-box { text-align: center; padding: 4px 0; border-bottom: 1px solid #555; margin-bottom: 6px; }
+.rating-box .rating-value { color: var(--gold); font-size: 16px; font-weight: bold; }
+.rating-box .rating-note { color: var(--text-dim); font-size: 10px; }
+
+.stats-section-title {
+  color: #fff;
+  background: var(--panel-title-bg);
+  text-shadow: 1px 1px 0 #000;
+  padding: 1px 6px;
+  font-size: 11px;
+  margin-top: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-grid { display: grid; grid-template-columns: 1fr auto; gap: 1px 12px; padding: 4px 6px; }
+.stat-name { color: var(--text-dim); }
+.stat-value { text-align: right; font-weight: bold; }
+.stat-value.pos { color: var(--green); }
+.stat-value.neg { color: var(--red); }
+
+.trait-list { padding: 4px 6px; display: flex; flex-wrap: wrap; gap: 3px; }
+.trait {
+  display: inline-flex; align-items: center; gap: 3px;
+  position: relative;
+  background: #2d2d2d;
+  border: 1px solid #555;
+  box-shadow: inset 1px 1px 0 #00000066;
+  padding: 1px 6px;
+  font-size: 12px;
+  cursor: help;
+}
+.trait img { width: 10px; height: 10px; }
+/* 特质悬浮描述（MC tooltip 风格，可换行） */
+.trait .trait-tip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #100010;
+  color: #fff;
+  border: 2px solid var(--border);
+  box-shadow: inset 1px 1px 0 #4a004a, 2px 2px 0 rgba(0, 0, 0, 0.6);
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 30;
+  text-shadow: none;
+}
+.trait:hover .trait-tip { display: block; }
+.trait .trait-tip.no-desc { color: var(--text-dim); }
+
+.harvest-tier { padding: 2px 6px; color: var(--text-dim); }
+
+/* ================= 底部材料库存 ================= */
+
+.inventory .panel-title { position: sticky; top: 0; z-index: 5; }
+.inventory-body { padding: 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 6px; max-height: 420px; overflow-y: auto; }
+
+.inv-item {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: #262626;
+  border: 2px solid var(--border);
+  padding: 3px 2px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 10px;
+  color: var(--text-dim);
+  text-align: center;
+}
+.inv-item img { width: 28px; height: 28px; }
+.inv-item:hover { background: #343434; }
+.inv-item.unowned img { filter: grayscale(1) opacity(0.35); }
+.inv-item.unowned { border-color: #333; color: #555; }
+
+.inv-count { color: var(--text-dim); font-size: 11px; margin-left: auto; }
+
+/* ================= 错误 / 忙碌 ================= */
+
+.error-box {
+  background: #4a1d1d;
+  color: #ffd0d0;
+  border: 2px solid var(--border);
+  padding: 6px 8px;
+  margin: 6px 0;
+  white-space: pre-wrap;
+}
+
+.hint-text { color: var(--text-dim); font-size: 11px; }
+
+.busy { display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center; color: var(--text); padding: 12px; }
+.busy-spinner { width: 18px; height: 18px; flex: none; border: 3px solid var(--border); border-top-color: var(--grass); border-radius: 50%; animation: busy-spin 0.8s linear infinite; }
+.busy-text { background: #2d2d2d; border: 1px solid var(--border); padding: 2px 12px; }
+@keyframes busy-spin { to { transform: rotate(360deg); } }
+
+.row { display: flex; align-items: center; gap: 6px; margin: 4px 0; flex-wrap: wrap; }
+.row label { color: var(--text-dim); font-weight: bold; white-space: nowrap; }

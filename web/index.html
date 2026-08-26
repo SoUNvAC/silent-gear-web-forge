@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silent Gear 拼配台</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="app-header">
+        <div class="grass-bar" aria-hidden="true"></div>
+        <div class="title-block">
+          <h1 class="blocky-title">SILENT GEAR</h1>
+          <span class="title-sub">Tool Builder · 拼配台</span>
+        </div>
+      </header>
+
+      <!-- 1. 当前工具类型的最优拼装（Optimizer weighted top-1） -->
+      <section id="best-build" class="panel best-build-bar" aria-label="最佳拼装"></section>
+
+      <!-- 2. 工具类型选择器（34 类型，合成图标 + 中文名） -->
+      <section id="tool-selector" class="panel tool-selector" aria-label="装备类型"></section>
+
+      <main class="app-main">
+        <!-- 3. 装配：每必填槽 = MC 方块槽，点击选材料 -->
+        <section id="assembly" class="panel" data-panel="assembly" aria-label="装配"></section>
+        <!-- 4. 材料选择器：搜索 + Owned/Missing + 品级/充能 + 材质网格 -->
+        <section id="material-selector" class="panel" data-panel="materials" aria-label="材料"></section>
+        <!-- 5. 当前拼装预览：合成贴图 + 属性 + traits + 当前评分 -->
+        <section id="preview" class="panel" data-panel="preview" aria-label="预览"></section>
+      </main>
+
+      <!-- 6. 底部材料库存：全部材料，点击切换拥有（未拥有 = 灰度） -->
+      <section id="inventory" class="panel inventory" aria-label="材料库存"></section>
+
+      <div id="boot" class="boot">
+        <span class="boot-text">◢ 加载数据中…</span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

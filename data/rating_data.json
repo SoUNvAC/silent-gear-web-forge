@@ -1,0 +1,91 @@
+{
+  "sword": {
+    "attack_damage": 0.45,
+    "attack_speed": 0.25,
+    "durability": 0.20,
+    "attack_reach": 0.05,
+    "traits": 0.05
+  },
+  "axe": {
+    "attack_damage": 0.35,
+    "attack_speed": 0.20,
+    "mining_speed": 0.15,
+    "harvest_level": 0.10,
+    "durability": 0.15,
+    "traits": 0.05
+  },
+  "pickaxe": {
+    "mining_speed": 0.45,
+    "harvest_level": 0.25,
+    "durability": 0.20,
+    "traits": 0.10
+  },
+  "shovel": {
+    "mining_speed": 0.45,
+    "harvest_level": 0.25,
+    "durability": 0.20,
+    "traits": 0.10
+  },
+  "hoe": {
+    "mining_speed": 0.35,
+    "harvest_level": 0.20,
+    "durability": 0.25,
+    "traits": 0.20
+  },
+  "hammer": {
+    "mining_speed": 0.35,
+    "harvest_level": 0.25,
+    "durability": 0.20,
+    "range_efficiency": 0.10,
+    "traits": 0.10
+  },
+  "paxel": {
+    "mining_speed": 0.30,
+    "harvest_level": 0.20,
+    "durability": 0.25,
+    "attack_damage": 0.15,
+    "traits": 0.10
+  },
+  "bow": {
+    "ranged_damage": 0.40,
+    "attack_speed": 0.25,
+    "durability": 0.20,
+    "projectile_range": 0.10,
+    "traits": 0.05
+  },
+  "crossbow": {
+    "ranged_damage": 0.40,
+    "attack_speed": 0.25,
+    "durability": 0.20,
+    "projectile_range": 0.10,
+    "traits": 0.05
+  },
+  "helmet": {
+    "armor": 0.40,
+    "armor_toughness": 0.20,
+    "armor_durability": 0.20,
+    "magic_armor": 0.15,
+    "traits": 0.05
+  },
+  "chestplate": {
+    "armor": 0.45,
+    "armor_toughness": 0.25,
+    "armor_durability": 0.15,
+    "magic_armor": 0.10,
+    "traits": 0.05
+  },
+  "leggings": {
+    "armor": 0.45,
+    "armor_toughness": 0.20,
+    "armor_durability": 0.20,
+    "magic_armor": 0.10,
+    "traits": 0.05
+  },
+  "boots": {
+    "armor": 0.35,
+    "armor_toughness": 0.20,
+    "armor_durability": 0.20,
+    "magic_armor": 0.15,
+    "traits": 0.10
+  }
+}

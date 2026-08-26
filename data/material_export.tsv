@@ -1,0 +1,292 @@
+Pack	Name	Type	ID	Parent	Traits	Tier	Durability	Armor Durability	Repair Efficiency	Repair Bonus	Enchantment Value	Charging Value	Rarity	Harvest Speed	Reach Distance	Attack Damage	Magic Damage	Attack Speed	Attack Reach	Ranged Damage	Ranged Speed	Projectile Speed	Projectile Accuracy	Armor	Armor Toughness	Knockback Resistance	Magic Armor
+silent-gear-1.20.1-3.6.6.jar	Amethyst	Adornment	silentgear:amethyst		Cursed IV	2																					
+silent-gear-1.20.1-3.6.6.jar	Diamond	Adornment	silentgear:diamond		Bastion I	3																					
+silent-gear-1.20.1-3.6.6.jar	Dimerald	Adornment	silentgear:dimerald		Kitty Vision	3																					
+silent-gear-1.20.1-3.6.6.jar	Emerald	Adornment	silentgear:emerald		Reach II	3																					
+silent-gear-1.20.1-3.6.6.jar	Example	Adornment	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Flint	Adornment	silentgear:flint			1																					
+silent-gear-1.20.1-3.6.6.jar	Lapis Lazuli	Adornment	silentgear:lapis_lazuli		Lucky III	2																					
+silent-gear-1.20.1-3.6.6.jar	Prismarine	Adornment	silentgear:prismarine		Swift Swim III	3																					
+silent-gear-1.20.1-3.6.6.jar	Quartz	Adornment	silentgear:quartz		Mighty II	2																					
+silent-gear-1.20.1-3.6.6.jar	Example	Binding	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Fine Silk	Binding	silentgear:fine_silk		"Lucky I, Flexible IV"	2																					2
+silent-gear-1.20.1-3.6.6.jar	Flax	Binding	silentgear:flax		Flexible III	1		5%						5%													
+silent-gear-1.20.1-3.6.6.jar	Fluffy String	Binding	silentgear:fluffy_string		Flexible III	1		5%						-5%													
+silent-gear-1.20.1-3.6.6.jar	Sinew	Binding	silentgear:sinew		Flexible IV	1			-5%																		
+silent-gear-1.20.1-3.6.6.jar	String	Binding	silentgear:string		Flexible I	1			5%																		
+silent-gear-1.20.1-3.6.6.jar	Vine	Binding	silentgear:vine			0			3%																		
+silent-gear-1.20.1-3.6.6.jar	Blaze Gold	Coating	silentgear:blaze_gold		"Brilliant, Soft II"	3	x0.95	x0.95					20														
+silent-gear-1.20.1-3.6.6.jar	Example	Coating	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Gold	Coating	silentgear:gold		"Brilliant, Soft III"	2	x0.9	x0.9					10														
+silent-gear-1.20.1-3.6.6.jar	Netherite	Coating	silentgear:netherite		Fireproof	4	"x1.3, +2"	x1.12			5			x1.13		x1.33	x1.33			x1.33					4	1	
+silent-gear-1.20.1-3.6.6.jar	Prismarine	Coating	silentgear:prismarine		"Aquatic V, Aquatic III"	3	x1.08	x1.13																	1	0.25	
+silent-gear-1.20.1-3.6.6.jar	Example	Cord	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Fine Silk	Cord	silentgear:fine_silk		Flexible II	2														7%							
+silent-gear-1.20.1-3.6.6.jar	Flax	Cord	silentgear:flax			1														-10%	20%						
+silent-gear-1.20.1-3.6.6.jar	Fluffy String	Cord	silentgear:fluffy_string			1														5%	-5%						
+silent-gear-1.20.1-3.6.6.jar	Sinew	Cord	silentgear:sinew		Flexible II	1														20%							
+silent-gear-1.20.1-3.6.6.jar	String	Cord	silentgear:string			1															10%						
+silent-gear-1.20.1-3.6.6.jar	Example	Cord	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Fine Silk	Cord	silentgear:fine_silk		Flexible II	2														7%							
+silent-gear-1.20.1-3.6.6.jar	Flax	Cord	silentgear:flax			1														-10%	20%						
+silent-gear-1.20.1-3.6.6.jar	Fluffy String	Cord	silentgear:fluffy_string			1														5%	-5%						
+silent-gear-1.20.1-3.6.6.jar	Sinew	Cord	silentgear:sinew		Flexible II	1														20%							
+silent-gear-1.20.1-3.6.6.jar	String	Cord	silentgear:string			1															10%						
+silent-gear-1.20.1-3.6.6.jar	Example	Fletching	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Feather	Fletching	silentgear:feather			1																0.9x	110%				
+silent-gear-1.20.1-3.6.6.jar	Leaf	Fletching	silentgear:leaves			1																1.1x	90%				
+silent-gear-1.20.1-3.6.6.jar	Paper	Fletching	silentgear:paper			0																1.1x	90%				
+silent-gear-1.20.1-3.6.6.jar	Example	Grip	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Fine Silk Cloth	Grip	silentgear:fine_silk_cloth		Accelerate I	2			10%					15%													
+silent-gear-1.20.1-3.6.6.jar	Leather	Grip	silentgear:leather		Flexible III	0			10%					15%				0.15									
+silent-gear-1.20.1-3.6.6.jar	Phantom Membrane	Grip	silentgear:phantom_membrane		Ancient II	2			15%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Wool	Grip	silentgear:wool		Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Black Wool	Grip	silentgear:wool/black	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Blue Wool	Grip	silentgear:wool/blue	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Brown Wool	Grip	silentgear:wool/brown	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Cyan Wool	Grip	silentgear:wool/cyan	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Gray Wool	Grip	silentgear:wool/gray	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Green Wool	Grip	silentgear:wool/green	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Light Blue Wool	Grip	silentgear:wool/light_blue	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Light Gray Wool	Grip	silentgear:wool/light_gray	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Lime Wool	Grip	silentgear:wool/lime	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Magenta Wool	Grip	silentgear:wool/magenta	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Orange Wool	Grip	silentgear:wool/orange	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Pink Wool	Grip	silentgear:wool/pink	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Purple Wool	Grip	silentgear:wool/purple	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Red Wool	Grip	silentgear:wool/red	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	White Wool	Grip	silentgear:wool/white	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Yellow Wool	Grip	silentgear:wool/yellow	silentgear:wool	Flexible II	0			20%					10%				0.2									
+silent-gear-1.20.1-3.6.6.jar	Example	Lining	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Fine Silk Cloth	Lining	silentgear:fine_silk_cloth		Flexible IV	2																					2
+silent-gear-1.20.1-3.6.6.jar	Leather	Lining	silentgear:leather		Flexible IV	0																					
+silent-gear-1.20.1-3.6.6.jar	Phantom Membrane	Lining	silentgear:phantom_membrane		"Light II, Flexible III"	2																					
+silent-gear-1.20.1-3.6.6.jar	Slime	Lining	silentgear:slime		Bounce	1																			0.5		
+silent-gear-1.20.1-3.6.6.jar	Wool	Lining	silentgear:wool		Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Black Wool	Lining	silentgear:wool/black	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Blue Wool	Lining	silentgear:wool/blue	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Brown Wool	Lining	silentgear:wool/brown	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Cyan Wool	Lining	silentgear:wool/cyan	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Gray Wool	Lining	silentgear:wool/gray	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Green Wool	Lining	silentgear:wool/green	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Light Blue Wool	Lining	silentgear:wool/light_blue	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Light Gray Wool	Lining	silentgear:wool/light_gray	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Lime Wool	Lining	silentgear:wool/lime	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Magenta Wool	Lining	silentgear:wool/magenta	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Orange Wool	Lining	silentgear:wool/orange	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Pink Wool	Lining	silentgear:wool/pink	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Purple Wool	Lining	silentgear:wool/purple	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Red Wool	Lining	silentgear:wool/red	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	White Wool	Lining	silentgear:wool/white	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Yellow Wool	Lining	silentgear:wool/yellow	silentgear:wool	Flexible II	0																				0.1	
+silent-gear-1.20.1-3.6.6.jar	Aluminum	Main	silentgear:aluminum		"Malleable III, Soft II, Synergistic I"	2	365	15x			14	0.9	25	8		2	2	0.2		2x	0.2x			14	0.5		3
+silent-gear-1.20.1-3.6.6.jar	Aluminum Steel	Main	silentgear:aluminum_steel		"Malleable IV, Synergistic II"	3	660	18x		-15%	11	1	45	8		4	1.5	0.1		2x	0x			18	2		6
+silent-gear-1.20.1-3.6.6.jar	Amethyst	Main	silentgear:amethyst		Renew I	2	210	10x			16	1.3	35	6		1	3	0		1x	0x	1x	100%	15			10
+silent-gear-1.20.1-3.6.6.jar	Azure Electrum	Main	silentgear:azure_electrum		"Malleable III, Accelerate III, Light IV"	4	1259	61x		50%	37	1.5	109	29		7	11	0		3x	0x	2x	150%	19	8		19
+silent-gear-1.20.1-3.6.6.jar	Azure Silver	Main	silentgear:azure_silver		"Malleable III, Soft II, Moonwalker IV"	3	197	17x		50%	29	1.4	83	19		5	7	0		2x	0x	1.2x	110%	13			13
+silent-gear-1.20.1-3.6.6.jar	Barrier	Main	silentgear:barrier		"Adamant V, Holy V"	5	1337	84x		-100%	5	0.5	111	5		1	1	0		1x	0x			20	10		10
+silent-gear-1.20.1-3.6.6.jar	Basalt	Main	silentgear:basalt		"Brittle II, Chipping III"	1	137	4x			6	0.7	7	4		1		0		0x	-0.1x	1x	80%	6			
+silent-gear-1.20.1-3.6.6.jar	Bismuth	Main	silentgear:bismuth		"Malleable II, Lustrous II"	2	330	10x			12	0.9	35	5		2.5	3.5	0.1		1x	0x			16	2		6
+silent-gear-1.20.1-3.6.6.jar	Bismuth Brass	Main	silentgear:bismuth_brass		"Malleable II, Lustrous II"	2	580	15x		15%	14	1.1	50	9		3	2	0.1		2x	0.2x			18	2		8
+silent-gear-1.20.1-3.6.6.jar	Bismuth Steel	Main	silentgear:bismuth_steel		"Malleable III, Lustrous II"	3	1050	25x		-15%	14	1	60	10		4	5	-0.1		3x	0.1x			20	4		8
+silent-gear-1.20.1-3.6.6.jar	Blackstone	Main	silentgear:blackstone		"Brittle I, Jagged II, Hard II"	1	151	5x			4	0.6	9	4		1		0		0x	-0.2x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Blaze Gold	Main	silentgear:blaze_gold		"Brilliant, Greedy III, Malleable III"	3	69	9x			24	1.2	45	15		2	5	0.1		1x	0.2x	1.2x	90%	13	1		10
+silent-gear-1.20.1-3.6.6.jar	Bone	Main	silentgear:bone		Chipping II	1	108	4x			5	0.9	8	4		2	1	0.1		1x	0x	0.9x	100%	5			1
+silent-gear-1.20.1-3.6.6.jar	Brass	Main	silentgear:brass		"Malleable II, Silky"	2	240	8x		15%	13	1.2	25	7		1.5	1.5	0.1		2x	0.2x			14	1		6
+silent-gear-1.20.1-3.6.6.jar	Bronze	Main	silentgear:bronze		Sharp I	2	300	13x		15%	12	1.1	15	6		2.5	1	0.2		2x	-0.2x			15	1		6
+silent-gear-1.20.1-3.6.6.jar	Compressed Iron	Main	silentgear:compressed_iron		"Malleable II, Hard III"	3	1024	24x		-15%	12	0.8	40	9		4	1	-0.2		3x	0x			20	2		4
+silent-gear-1.20.1-3.6.6.jar	Copper	Main	silentgear:copper		Soft I	2	151	12x			15	1.3	12	5		1.5	1	0.1		0.1x	0x			10			8
+silent-gear-1.20.1-3.6.6.jar	Crimson Iron	Main	silentgear:crimson_iron		"Malleable III, Hard II"	3	420	27x		50%	14	0.7	31	10		3	3	-0.1		2x	-0.1x	1x	110%	18	2		6
+silent-gear-1.20.1-3.6.6.jar	Crimson Steel	Main	silentgear:crimson_steel		"Malleable V, Hard III, Flame Ward"	4	2400	42x		50%	19	0.9	83	15		6	6	-0.1		3x	-0.1x	1x	130%	22	10		10
+silent-gear-1.20.1-3.6.6.jar	Diamond	Main	silentgear:diamond		"Brittle II, Lustrous I"	3	1561	33x			10	0.8	70	8		3	1	0		2x	-0.2x	0.9x	110%	20	8		4
+silent-gear-1.20.1-3.6.6.jar	Dimerald	Main	silentgear:dimerald		"Brittle I, Gold Digger II"	3	1776	36x			12	0.7	80	9		3	3	0.1		3x	0.1x	1x	120%	22	10		10
+silent-gear-1.20.1-3.6.6.jar	Electrum	Main	silentgear:electrum		"Malleable II, Soft II"	2	96	10x			25	1.5	40	14		2	5	0.3		1x	0.4x			15			11
+silent-gear-1.20.1-3.6.6.jar	Emerald	Main	silentgear:emerald		"Brittle I, Synergistic II"	3	1080	24x		25%	16	1	40	10		2	2	0		1x	-0.1x	1.1x	90%	16	4		6
+silent-gear-1.20.1-3.6.6.jar	End Stone	Main	silentgear:end_stone		"Jagged III, Ancient II"	1	1164	15x		-20%	10	0.9	32	7		2	3	0.1		0x	0x	1x	80%	15	1		6
+silent-gear-1.20.1-3.6.6.jar	Enderium	Main	silentgear:enderium		Malleable III	4	1200	34x		15%	13	1.2	80	18		6	4	0		3x	0x			22	8		10
+silent-gear-1.20.1-3.6.6.jar	Example	Main	silentgear:example			0	100	6x			1	1	0	1		1	1	0		0x	0x			4	1		1
+silent-gear-1.20.1-3.6.6.jar	Fine Silk Cloth	Main	silentgear:fine_silk_cloth		Snow Walker	2	0	14x			14	0.9	40											6			14
+silent-gear-1.20.1-3.6.6.jar	Flint	Main	silentgear:flint		Jagged III	1	124	4x			3	0.8	6	5		2		-0.1		1x	-0.3x	1x	100%	4			
+silent-gear-1.20.1-3.6.6.jar	Gold	Main	silentgear:gold		"Brilliant, Malleable I, Soft III"	2	32	7x			22	1.2	50	12		0	4	0		0x	0.3x	1.1x	100%	11			8
+silent-gear-1.20.1-3.6.6.jar	High-Carbon Steel	Main	silentgear:high_carbon_steel		Malleable III	2	420	24x		5%	11	0.8	40	6		4	1	-0.2		2x	-0.2x			20	2		6
+silent-gear-1.20.1-3.6.6.jar	Invar	Main	silentgear:invar		"Malleable III, Adamant II"	2	640	20x		15%	13	1.2	50	7		3.5	3	0		2x	0x			18	2		6
+silent-gear-1.20.1-3.6.6.jar	Iron	Main	silentgear:iron		"Malleable III, Magnetic I"	2	250	15x			14	0.7	20	6		2	1	0		1x	0.1x	1x	110%	15			6
+silent-gear-1.20.1-3.6.6.jar	Lapis Lazuli	Main	silentgear:lapis_lazuli			2	200	13x			17	1.3	30	5		2	3	0		0x	-0.1x	1x	80%	15			10
+silent-gear-1.20.1-3.6.6.jar	Lead	Main	silentgear:lead		"Malleable II, Aquatic II"	2	260	14x			15	0.8	40	4		2	2	-0.4		1x	-0.3x			13			4
+silent-gear-1.20.1-3.6.6.jar	Leather	Main	silentgear:leather		Snow Walker	0	0	5x			15	0.8	11											7			8
+silent-gear-1.20.1-3.6.6.jar	Lumium	Main	silentgear:lumium		"Malleable III, Refractive"	3	920	20x		15%	14	1.3	75	15		4	3	0.2		2x	0x			18	4		10
+silent-gear-1.20.1-3.6.6.jar	Netherrack	Main	silentgear:netherrack		"Eroded III, Flexible II"	1	142	5x		-20%	8	0.8	11	5		0.5	0.5	0		0.5x	0.1x	0.8x	100%	8			4
+silent-gear-1.20.1-3.6.6.jar	Netherwood	Main	silentgear:netherwood		"Flexible III, Jagged II"	0	72	12x	50%	10%	13	0.7	4	2		0		0.2		0x	0x	1x	80%	8			6
+silent-gear-1.20.1-3.6.6.jar	Nickel	Main	silentgear:nickel		"Malleable III, Adamant I"	2	380	17x			12	1	40	7		2.5	1	0.1		0.5x	0.1x			13			6
+silent-gear-1.20.1-3.6.6.jar	Obsidian	Main	silentgear:obsidian		"Jagged III, Crushing II"	3	3072	37x		-50%	7	0.6	10	6		3	2	-0.4		0x	-0.4x	0.7x	70%	20	4		8
+silent-gear-1.20.1-3.6.6.jar	Osmium	Main	silentgear:osmium		Malleable II	2	500	30x			12	1.1	35	10		4	2	0.1		1x	0x			17			4
+silent-gear-1.20.1-3.6.6.jar	Phantom Membrane	Main	silentgear:phantom_membrane		Renew II	2	0	12x			10	0.7	35											6			8
+silent-gear-1.20.1-3.6.6.jar	Platinum	Main	silentgear:platinum		"Malleable III, Soft II"	3	900	21x			14	1.2	80	12		4	4	0		1x	0x			18	2		12
+silent-gear-1.20.1-3.6.6.jar	Quartz	Main	silentgear:quartz		"Crushing III, Jagged II"	2	330	13x			10	1.2	40	7		2		0.1		0x	0.1x	1x	100%	14			4
+silent-gear-1.20.1-3.6.6.jar	Redstone Alloy	Main	silentgear:redstone_alloy		"Malleable III, Eroded III"	2	840	20x		-15%	18	0.9	45	11		2	4	0.2		1x	0.2x			17	1		8
+silent-gear-1.20.1-3.6.6.jar	Refined Glowstone	Main	silentgear:refined_glowstone		"Malleable II, Lustrous IV"	3	300	18x		15%	18	0.8	45	14		5	3	0		3x	0x			19			8
+silent-gear-1.20.1-3.6.6.jar	Refined Iron	Main	silentgear:refined_iron		"Malleable IV, Stellar I"	2	512	20x		-15%	15	0.8	25	7		3	2	0		2x	0x			18	2		6
+silent-gear-1.20.1-3.6.6.jar	Refined Obsidian	Main	silentgear:refined_obsidian		"Malleable III, Hard IV"	4	2500	50x		-30%	40	0.8	70	20		10	4	0.3		4x	0.2x			30	16		6
+silent-gear-1.20.1-3.6.6.jar	Sandstone	Main	silentgear:sandstone			1	117	6x		-10%	7	0.7	7	4		1		0.1		0x	-0.1x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Red Sandstone	Main	silentgear:sandstone/red	silentgear:sandstone		1	117	6x		-10%	7	0.7	7	4		1		0.1		0x	-0.1x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Example Sheet Metal	Main	silentgear:sheet_metal			0	"100, x0"	"6x, x0.6"			1	1	0	1		1	1	0		0x	0x			"4, x0.5"	"1, x0.5"		1
+silent-gear-1.20.1-3.6.6.jar	Signalum	Main	silentgear:signalum		"Flexible II, Lustrous IV"	4	800	25x		15%	16	1.2	50	13		3	4	0		2x	0.2x			16	2		4
+silent-gear-1.20.1-3.6.6.jar	Silver	Main	silentgear:silver		"Malleable II, Soft I"	2	64	9x			20	1.1	40	11		0	4	0.2		0x	0.3x			11			10
+silent-gear-1.20.1-3.6.6.jar	Steel	Main	silentgear:steel		Malleable V	2	500	20x		15%	11	0.8	40	6		4	1	-0.2		2x	-0.2x			20	2		6
+silent-gear-1.20.1-3.6.6.jar	Stone	Main	silentgear:stone		Ancient I	1	131	5x			5	0.5	4	4		1		0		0x	-0.2x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Andesite	Main	silentgear:stone/andesite	silentgear:stone	Ancient I	1	131	5x			5	0.5	4	4		1		0		0x	-0.2x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Diorite	Main	silentgear:stone/diorite	silentgear:stone	Ancient I	1	131	5x			5	0.5	4	4		1		0		0x	-0.2x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Granite	Main	silentgear:stone/granite	silentgear:stone	Ancient I	1	131	5x			5	0.5	4	4		1		0		0x	-0.2x	1x	80%	5			
+silent-gear-1.20.1-3.6.6.jar	Terracotta	Main	silentgear:terracotta		"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Black Terracotta	Main	silentgear:terracotta/black	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Blue Terracotta	Main	silentgear:terracotta/blue	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Brown Terracotta	Main	silentgear:terracotta/brown	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Cyan Terracotta	Main	silentgear:terracotta/cyan	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Gray Terracotta	Main	silentgear:terracotta/gray	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Green Terracotta	Main	silentgear:terracotta/green	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Light Blue Terracotta	Main	silentgear:terracotta/light_blue	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Light Gray Terracotta	Main	silentgear:terracotta/light_gray	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Lime Terracotta	Main	silentgear:terracotta/lime	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Magenta Terracotta	Main	silentgear:terracotta/magenta	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Orange Terracotta	Main	silentgear:terracotta/orange	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Pink Terracotta	Main	silentgear:terracotta/pink	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Purple Terracotta	Main	silentgear:terracotta/purple	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Red Terracotta	Main	silentgear:terracotta/red	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	White Terracotta	Main	silentgear:terracotta/white	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Yellow Terracotta	Main	silentgear:terracotta/yellow	silentgear:terracotta	"Brittle I, Chipping II, Rustic I"	1	165	11x		-10%	9	0.8	7	4		1.5		0.2		0x	-0.2x	1x	90%	9			3
+silent-gear-1.20.1-3.6.6.jar	Tin	Main	silentgear:tin		"Malleable I, Soft II"	1	192	13x			12	1.1	15	5		1.5	1	0		0.5x	0x			12			2
+silent-gear-1.20.1-3.6.6.jar	Titanium	Main	silentgear:titanium		"Malleable II, Hard IV"	4	1600	37x			12	1	80	8		6	1	0		1x	-0.2x			24	8		4
+silent-gear-1.20.1-3.6.6.jar	Turtle	Main	silentgear:turtle		Turtle	2	0				9	0.5	20														4
+silent-gear-1.20.1-3.6.6.jar	Tyrian Steel	Main	silentgear:tyrian_steel		"Sturdy III, Void Ward"	4	3652	81x			16	1.1	100	18		8	6	0		4x	0x	1.1x	110%	25	12		12
+silent-gear-1.20.1-3.6.6.jar	Uranium	Main	silentgear:uranium		Malleable II	3	800	20x		-15%	17	1.5	50	6		2	2	0.1		0.5x	0.1x			13	1		3
+silent-gear-1.20.1-3.6.6.jar	Wooden	Main	silentgear:wood		"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Acacia Wood	Main	silentgear:wood/acacia	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Birch Wood	Main	silentgear:wood/birch	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Crimson Wood	Main	silentgear:wood/crimson	silentgear:wood	Jagged I	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Dark Oak Wood	Main	silentgear:wood/dark_oak	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Jungle Wood	Main	silentgear:wood/jungle	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Oak Wood	Main	silentgear:wood/oak	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Spruce Wood	Main	silentgear:wood/spruce	silentgear:wood	"Flammable, Jagged I"	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Warped Wood	Main	silentgear:wood/warped	silentgear:wood	Jagged I	0	59	8x		25%	15	0.6	1	2		0		0		0x	0x	1x	90%	7			2
+silent-gear-1.20.1-3.6.6.jar	Wool	Main	silentgear:wool		Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Black Wool	Main	silentgear:wool/black	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Blue Wool	Main	silentgear:wool/blue	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Brown Wool	Main	silentgear:wool/brown	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Cyan Wool	Main	silentgear:wool/cyan	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Gray Wool	Main	silentgear:wool/gray	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Green Wool	Main	silentgear:wool/green	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Light Blue Wool	Main	silentgear:wool/light_blue	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Light Gray Wool	Main	silentgear:wool/light_gray	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Lime Wool	Main	silentgear:wool/lime	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Magenta Wool	Main	silentgear:wool/magenta	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Orange Wool	Main	silentgear:wool/orange	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Pink Wool	Main	silentgear:wool/pink	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Purple Wool	Main	silentgear:wool/purple	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Red Wool	Main	silentgear:wool/red	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	White Wool	Main	silentgear:wool/white	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Yellow Wool	Main	silentgear:wool/yellow	silentgear:wool	Snow Walker	0	0	4x			7	0.7	7											4			4
+silent-gear-1.20.1-3.6.6.jar	Zinc	Main	silentgear:zinc		"Malleable I, Soft II"	1	192	10x			15	1.1	10	3		1.5	1	0		0x	0x			10			2
+silent-gear-1.20.1-3.6.6.jar	Amethyst	Tip Upgrade	silentgear:amethyst		Silky	2	x0.75																				
+silent-gear-1.20.1-3.6.6.jar	Azure Electrum	Tip Upgrade	silentgear:azure_electrum		Malleable III	4	401	11						5													
+silent-gear-1.20.1-3.6.6.jar	Azure Silver	Tip Upgrade	silentgear:azure_silver		"Malleable II, Soft II"	3	83	3					31	3			2	0.2									
+silent-gear-1.20.1-3.6.6.jar	Blaze Gold	Tip Upgrade	silentgear:blaze_gold		"Soft II, Fiery II"	3	32	3					14	4		1	1										
+silent-gear-1.20.1-3.6.6.jar	Crimson Iron	Tip Upgrade	silentgear:crimson_iron		Fiery I	3	224	8					10	2		2											
+silent-gear-1.20.1-3.6.6.jar	Crimson Steel	Tip Upgrade	silentgear:crimson_steel		Magmatic	4	448	16					20														
+silent-gear-1.20.1-3.6.6.jar	Diamond	Tip Upgrade	silentgear:diamond		"Brittle II, Lustrous II"	3	256	9					20	2		2	1			0.5							
+silent-gear-1.20.1-3.6.6.jar	Dimerald	Tip Upgrade	silentgear:dimerald		Imperial II	3	360						25	2		2	1			0.5							
+silent-gear-1.20.1-3.6.6.jar	Emerald	Tip Upgrade	silentgear:emerald		"Brittle I, Synergistic II"	3	512	12					20	2		1	2			1							
+silent-gear-1.20.1-3.6.6.jar	Example	Tip Upgrade	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Glowstone	Tip Upgrade	silentgear:glowstone		"Refractive, Lustrous IV"	2							15	x1.4		2	2				x1.3						
+silent-gear-1.20.1-3.6.6.jar	Gold	Tip Upgrade	silentgear:gold		"Malleable I, Soft III"	2	16	1					30	6			2				0.2						
+silent-gear-1.20.1-3.6.6.jar	Iron	Tip Upgrade	silentgear:iron		Malleable II	2	128	4					8	1		1					0.2						
+silent-gear-1.20.1-3.6.6.jar	Lapis Lazuli	Tip Upgrade	silentgear:lapis_lazuli		"Holy I, Lucky IV"	2								x0.9			2	0.3									
+silent-gear-1.20.1-3.6.6.jar	Quartz	Tip Upgrade	silentgear:quartz		"Chipping I, Jagged III"	2	64	64					20	2		4				1.5							
+silent-gear-1.20.1-3.6.6.jar	Redstone	Tip Upgrade	silentgear:redstone			2							10	x1.2		2		0.5		2							
+silent-gear-1.20.1-3.6.6.jar	Refined Glowstone	Tip Upgrade	silentgear:refined_glowstone		Refractive	3								5													
+silent-gear-1.20.1-3.6.6.jar	Refined Obsidian	Tip Upgrade	silentgear:refined_obsidian		Vulcan	4	600																				
+silent-gear-1.20.1-3.6.6.jar	Tyrian Steel	Tip Upgrade	silentgear:tyrian_steel		"Imperial III, Gold Digger III"	4	251						30														
+silent-gear-1.20.1-3.6.6.jar	Aluminum	Tool Rod	silentgear:aluminum		"Malleable III, Synergistic II"	2	x1.2						30							x1.1							
+silent-gear-1.20.1-3.6.6.jar	Aluminum Steel	Tool Rod	silentgear:aluminum_steel		"Malleable III, Synergistic III"	3	x1.3						45	x1.1													
+silent-gear-1.20.1-3.6.6.jar	Azure Electrum	Tool Rod	silentgear:azure_electrum		"Flexible II, Accelerate V"	4								3								x2.5					
+silent-gear-1.20.1-3.6.6.jar	Azure Silver	Tool Rod	silentgear:azure_silver		Bending II	3	x0.8							3													
+silent-gear-1.20.1-3.6.6.jar	Bamboo	Tool Rod	silentgear:bamboo		Flexible III	0																					
+silent-gear-1.20.1-3.6.6.jar	Basalt	Tool Rod	silentgear:basalt		"Brittle III, Chipping II"	1								x1.1		x0.9											
+silent-gear-1.20.1-3.6.6.jar	Bismuth	Tool Rod	silentgear:bismuth		Malleable II	2	x1.1						35	x1.1													
+silent-gear-1.20.1-3.6.6.jar	Bismuth Brass	Tool Rod	silentgear:bismuth_brass		Malleable II	2	x0.9						50	x1.2													
+silent-gear-1.20.1-3.6.6.jar	Bismuth Steel	Tool Rod	silentgear:bismuth_steel		Malleable III	3	x1.25						60	x1.15													
+silent-gear-1.20.1-3.6.6.jar	Blackstone	Tool Rod	silentgear:blackstone		"Brittle I, Jagged II, Hard I"	1								x0.9													
+silent-gear-1.20.1-3.6.6.jar	Blaze Gold	Tool Rod	silentgear:blaze_gold		Flexible III	3								x1.1													
+silent-gear-1.20.1-3.6.6.jar	Blaze Rod	Tool Rod	silentgear:blaze_rod		"Malleable IV, Flexible II, Reach I"	3								x1.1		x1.2				x1.1							
+silent-gear-1.20.1-3.6.6.jar	Bone	Tool Rod	silentgear:bone		Flexible II	1										x1.2											
+silent-gear-1.20.1-3.6.6.jar	Brass	Tool Rod	silentgear:brass		Malleable II	2	x1.05						25	x1.05													
+silent-gear-1.20.1-3.6.6.jar	Bronze	Tool Rod	silentgear:bronze		Flexible I	2										x1.05											
+silent-gear-1.20.1-3.6.6.jar	Compressed Iron	Tool Rod	silentgear:compressed_iron		"Malleable II, Magnetic IV"	3	x1.25						40														
+silent-gear-1.20.1-3.6.6.jar	Copper	Tool Rod	silentgear:copper		"Bending III, Soft III"	2								x1.2													
+silent-gear-1.20.1-3.6.6.jar	Crimson Iron	Tool Rod	silentgear:crimson_iron		Flexible III	3										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Crimson Steel	Tool Rod	silentgear:crimson_steel		"Flexible IV, Sturdy I"	4								x1.2						1							
+silent-gear-1.20.1-3.6.6.jar	Diamond	Tool Rod	silentgear:diamond		"Brittle V, Lustrous IV"	3								x1.2													
+silent-gear-1.20.1-3.6.6.jar	Dimerald	Tool Rod	silentgear:dimerald		"Brittle I, Ancient III"	3								x1.15													
+silent-gear-1.20.1-3.6.6.jar	Electrum	Tool Rod	silentgear:electrum		Lustrous III	2							40					0.1			x1.1						
+silent-gear-1.20.1-3.6.6.jar	Emerald	Tool Rod	silentgear:emerald		Brittle IV	3								x1.3													
+silent-gear-1.20.1-3.6.6.jar	End Rod	Tool Rod	silentgear:end_rod		"Flexible IV, Sturdy II, Refractive"	3								x1.2		x1.1				x1.1							
+silent-gear-1.20.1-3.6.6.jar	End Stone	Tool Rod	silentgear:end_stone		"Malleable I, Ancient IV"	1										1											
+silent-gear-1.20.1-3.6.6.jar	Enderium	Tool Rod	silentgear:enderium		Malleable II	4	x1.2						60	x1.2													
+silent-gear-1.20.1-3.6.6.jar	Example	Tool Rod	silentgear:example			0																					
+silent-gear-1.20.1-3.6.6.jar	Flint	Tool Rod	silentgear:flint		"Brittle III, Jagged II"	1																					
+silent-gear-1.20.1-3.6.6.jar	Gold	Tool Rod	silentgear:gold		Bending IV	2								3													
+silent-gear-1.20.1-3.6.6.jar	Invar	Tool Rod	silentgear:invar		Malleable III	2	x1.3						50			x1.1											
+silent-gear-1.20.1-3.6.6.jar	Iron	Tool Rod	silentgear:iron		"Flexible II, Magnetic III"	2																					
+silent-gear-1.20.1-3.6.6.jar	Lead	Tool Rod	silentgear:lead		Soft IV	2	x1.1						40	x0.9													
+silent-gear-1.20.1-3.6.6.jar	Lumium	Tool Rod	silentgear:lumium		"Malleable III, Refractive"	3							75	x1.2						x1.1							
+silent-gear-1.20.1-3.6.6.jar	Netherrack	Tool Rod	silentgear:netherrack		"Eroded II, Bending II"	1																					
+silent-gear-1.20.1-3.6.6.jar	Netherwood	Tool Rod	silentgear:netherwood		Flexible I	0								1		0.5											
+silent-gear-1.20.1-3.6.6.jar	Nickel	Tool Rod	silentgear:nickel		Malleable III	2	x1.2						40			x1.1											
+silent-gear-1.20.1-3.6.6.jar	Obsidian	Tool Rod	silentgear:obsidian		"Brittle II, Chipping III"	3								x0.9													
+silent-gear-1.20.1-3.6.6.jar	Osmium	Tool Rod	silentgear:osmium		Malleable II	2	x1.1		x1.1				35														
+silent-gear-1.20.1-3.6.6.jar	Platinum	Tool Rod	silentgear:platinum		"Malleable II, Soft IV"	3	x0.9		x1.1				70														
+silent-gear-1.20.1-3.6.6.jar	Quartz	Tool Rod	silentgear:quartz		Brittle III	2								x1.2		x1.1											
+silent-gear-1.20.1-3.6.6.jar	Redstone Alloy	Tool Rod	silentgear:redstone_alloy		Malleable III	2							45	x1.2													
+silent-gear-1.20.1-3.6.6.jar	Refined Glowstone	Tool Rod	silentgear:refined_glowstone		"Malleable IV, Lustrous I"	3	x0.9						45	x1.2													
+silent-gear-1.20.1-3.6.6.jar	Refined Iron	Tool Rod	silentgear:refined_iron		"Malleable IV, Magnetic III"	2	x1.15						25							x1.1							
+silent-gear-1.20.1-3.6.6.jar	Refined Obsidian	Tool Rod	silentgear:refined_obsidian		"Malleable IV, Hard III"	4	x1.25						70														
+silent-gear-1.20.1-3.6.6.jar	Sandstone	Tool Rod	silentgear:sandstone		Brittle I	1																					
+silent-gear-1.20.1-3.6.6.jar	Red Sandstone	Tool Rod	silentgear:sandstone/red	silentgear:sandstone	Brittle I	1																					
+silent-gear-1.20.1-3.6.6.jar	Signalum	Tool Rod	silentgear:signalum		"Flexible IV, Lustrous II"	4			x0.9				50	x1.3													
+silent-gear-1.20.1-3.6.6.jar	Silver	Tool Rod	silentgear:silver		"Malleable I, Soft II"	2							40	x1.1			x1.1										
+silent-gear-1.20.1-3.6.6.jar	Steel	Tool Rod	silentgear:steel		Malleable V	2	x1.25						40														
+silent-gear-1.20.1-3.6.6.jar	Stone	Tool Rod	silentgear:stone		"Brittle II, Crushing II"	1								x1.1													
+silent-gear-1.20.1-3.6.6.jar	Andesite	Tool Rod	silentgear:stone/andesite	silentgear:stone	"Brittle II, Crushing II"	1								x1.1													
+silent-gear-1.20.1-3.6.6.jar	Diorite	Tool Rod	silentgear:stone/diorite	silentgear:stone	"Brittle II, Crushing II"	1								x1.1													
+silent-gear-1.20.1-3.6.6.jar	Granite	Tool Rod	silentgear:stone/granite	silentgear:stone	"Brittle II, Crushing II"	1								x1.1													
+silent-gear-1.20.1-3.6.6.jar	Terracotta	Tool Rod	silentgear:terracotta		"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Black Terracotta	Tool Rod	silentgear:terracotta/black	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Blue Terracotta	Tool Rod	silentgear:terracotta/blue	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Brown Terracotta	Tool Rod	silentgear:terracotta/brown	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Cyan Terracotta	Tool Rod	silentgear:terracotta/cyan	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Gray Terracotta	Tool Rod	silentgear:terracotta/gray	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Green Terracotta	Tool Rod	silentgear:terracotta/green	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Light Blue Terracotta	Tool Rod	silentgear:terracotta/light_blue	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Light Gray Terracotta	Tool Rod	silentgear:terracotta/light_gray	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Lime Terracotta	Tool Rod	silentgear:terracotta/lime	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Magenta Terracotta	Tool Rod	silentgear:terracotta/magenta	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Orange Terracotta	Tool Rod	silentgear:terracotta/orange	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Pink Terracotta	Tool Rod	silentgear:terracotta/pink	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Purple Terracotta	Tool Rod	silentgear:terracotta/purple	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Red Terracotta	Tool Rod	silentgear:terracotta/red	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	White Terracotta	Tool Rod	silentgear:terracotta/white	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Yellow Terracotta	Tool Rod	silentgear:terracotta/yellow	silentgear:terracotta	"Brittle II, Crushing I"	1										x1.1											
+silent-gear-1.20.1-3.6.6.jar	Tin	Tool Rod	silentgear:tin		"Malleable II, Soft I"	1							15					0.2									
+silent-gear-1.20.1-3.6.6.jar	Titanium	Tool Rod	silentgear:titanium		"Flexible II, Hard IV"	4	x1.1						80			"x1.2, +2"											
+silent-gear-1.20.1-3.6.6.jar	Tyrian Steel	Tool Rod	silentgear:tyrian_steel		Sturdy IV	4								-2													
+silent-gear-1.20.1-3.6.6.jar	Uranium	Tool Rod	silentgear:uranium		Malleable II	3							40	x1.1							x1.1						
+silent-gear-1.20.1-3.6.6.jar	Wooden	Tool Rod	silentgear:wood		Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Acacia Wood	Tool Rod	silentgear:wood/acacia	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Birch Wood	Tool Rod	silentgear:wood/birch	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Crimson Wood	Tool Rod	silentgear:wood/crimson	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Dark Oak Wood	Tool Rod	silentgear:wood/dark_oak	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Jungle Wood	Tool Rod	silentgear:wood/jungle	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Oak Wood	Tool Rod	silentgear:wood/oak	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Rough Wood	Tool Rod	silentgear:wood/rough		"Crude III, Bending V"	0																					
+silent-gear-1.20.1-3.6.6.jar	Spruce Wood	Tool Rod	silentgear:wood/spruce	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Warped Wood	Tool Rod	silentgear:wood/warped	silentgear:wood	Flexible II	0																					
+silent-gear-1.20.1-3.6.6.jar	Zinc	Tool Rod	silentgear:zinc		"Malleable II, Soft III"	1	x0.95						15			x1.05											
