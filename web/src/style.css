@@ -29,6 +29,8 @@
   --green: #6fd36f;
   --red: #d0574f;
   --selected: #fff7d0;
+  /* 工具合成贴图的固定高级感背景（与 registry.ts TOOL_BG 同值） */
+  --tool-bg: #1b222c;
   /* MC 像素字体优先；中文回退系统黑体（MC 字体不含 CJK 字形） */
   --font: "Minecraft", "Microsoft YaHei", "微软雅黑", "PingFang SC", "Noto Sans SC", sans-serif;
 }
@@ -83,7 +85,8 @@ body {
 
 .app-main {
   display: grid;
-  grid-template-columns: 320px 1fr 320px;
+  /* 装配(320) | 材料(缩半) | 工具贴图预览 | 当前拼装(320)：材料与预览共享弹性宽度 → 材料横向减半 */
+  grid-template-columns: 320px 1fr 1fr 320px;
   gap: 10px;
   max-width: 1500px;
   margin: 10px auto 0;
@@ -95,14 +98,16 @@ body {
   .app-main { grid-template-columns: 1fr 1fr; }
   #material-selector { grid-column: 1 / -1; grid-row: 1; }
   #assembly { grid-row: 2; }
-  #preview { grid-row: 2; }
+  #tool-preview { grid-row: 2; }
+  #preview { grid-column: 1 / -1; grid-row: 3; }
 }
 
 @media (max-width: 720px) {
   .app-main { grid-template-columns: 1fr; }
   #material-selector { grid-column: auto; grid-row: auto; }
   #assembly { grid-row: auto; }
-  #preview { grid-row: auto; }
+  #tool-preview { grid-row: auto; }
+  #preview { grid-column: auto; grid-row: auto; }
 }
 
 .boot { padding: 30px; text-align: center; color: var(--text-dim); }
@@ -507,17 +512,21 @@ select option { background: #4a4a4a; color: var(--text); }
 
 .mat-hint { color: var(--text-dim); font-size: 11px; margin-bottom: 6px; }
 
-/* ================= 预览 ================= */
+/* ================= 工具贴图预览 ================= */
 
-.preview-icon {
-  width: 96px; height: 96px;
-  margin: 6px auto;
-  display: grid; place-items: center;
-  background: var(--slot-bg);
+.tool-preview-canvas {
+  display: grid;
+  place-items: center;
+  margin: 4px auto;
+  padding: 10px;
+  /* 与合成贴图内置背景同色，padding 无缝 */
+  background: var(--tool-bg);
   border: 3px solid var(--border);
   box-shadow: inset 3px 3px 0 var(--slot-top), inset -3px -3px 0 var(--slot-bottom);
 }
-.preview-icon img { width: 72px; height: 72px; }
+.tool-preview-canvas img { width: 128px; height: 128px; }
+
+/* ================= 预览（当前拼装：属性 + 评分，合成贴图见「工具贴图预览」） ================= */
 
 .rating-box { text-align: center; padding: 4px 0; border-bottom: 1px solid #555; margin-bottom: 6px; }
 .rating-box .rating-value { color: var(--gold); font-size: 16px; font-weight: bold; }

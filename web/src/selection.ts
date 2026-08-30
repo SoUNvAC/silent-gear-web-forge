@@ -10,24 +10,31 @@ import type { MaterialChoice } from '../../src/calc/index.js';
 import { statLabel, formatNum } from './format.js';
 
 /**
- * 每槽兜底首个候选材料（品级缺省 NONE）；返回补全后的选择 + 是否有变化。
- * 选择值 = MaterialChoice（{id, grade?}）——装配每槽材质自带品级，与游戏一致。
+ * 装配选择补全。选择值 = MaterialChoice（{id, grade?}，品级缺省 NONE）。
+ * 必填槽（required）无有效选择时兜底首个候选；附属槽支持**空选**——
+ * 无选择保持空，无效选择直接清空，不兜底（默认空选，与游戏一致）。
  */
 export function fillChoices(
   views: readonly CandidateSlotView[],
   choices: Partial<Record<PartTypeId, MaterialChoice>>,
+  required: ReadonlySet<PartTypeId>,
 ): { filled: Partial<Record<PartTypeId, MaterialChoice>>; changed: boolean } {
   const filled = { ...choices };
   let changed = false;
   for (const v of views) {
     const existing = filled[v.slot];
     const valid = existing !== undefined && v.materials.some((m) => m.id === existing.id);
-    if (!valid) {
+    if (valid) continue;
+    if (required.has(v.slot)) {
       const first = v.materials[0];
       if (first) {
         filled[v.slot] = { id: first.id };
         changed = true;
       }
+    } else if (existing !== undefined) {
+      // 附属槽：失效选择 → 清空（空选）
+      delete filled[v.slot];
+      changed = true;
     }
   }
   return { filled, changed };

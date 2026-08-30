@@ -4,7 +4,14 @@
  * 纯函数测试：单材/复合（取主材）/附属槽/升级件不覆盖。
  */
 import { describe, expect, it } from 'vitest';
-import { buildChoicesFromBuild } from './selection.js';
+import { buildChoicesFromBuild, fillChoices } from './selection.js';
+import type { PartTypeId } from '../../src/data/types.js';
+import type { CandidateSlotView } from '../../src/optimizer/index.js';
+
+/** 构造最小 CandidateSlotView（fillChoices 只读 slot + materials） */
+function view(slot: PartTypeId, ids: string[]): CandidateSlotView {
+  return { slot, materials: ids.map((id) => ({ id })) } as unknown as CandidateSlotView;
+}
 
 describe('buildChoicesFromBuild', () => {
   it('单材槽映射到 materialChoices（值 = MaterialChoice {id}，品级缺省 NONE）', () => {
@@ -58,5 +65,51 @@ describe('buildChoicesFromBuild', () => {
       { slot: 'silentgear:main', materials: [{ id: 'silentgear:iron', grade: 'NONE' }] },
     ]);
     expect(choices['silentgear:main']).toEqual({ id: 'silentgear:iron' });
+  });
+});
+
+describe('fillChoices（必填兜底 / 附属空选）', () => {
+  const CORE = new Set<PartTypeId>(['silentgear:main']);
+  const views = (): CandidateSlotView[] => [
+    view('silentgear:main', ['silentgear:iron', 'silentgear:steel']),
+    view('silentgear:coating', ['silentgear:prismarine']),
+  ];
+
+  it('必填槽空选择 → 兜底首候选', () => {
+    const { filled, changed } = fillChoices(views(), {}, CORE);
+    expect(filled['silentgear:main']).toEqual({ id: 'silentgear:iron' });
+    expect(changed).toBe(true);
+  });
+
+  it('附属槽默认空选：无选择不补', () => {
+    const { filled, changed } = fillChoices(views(), { 'silentgear:main': { id: 'silentgear:iron' } }, CORE);
+    expect(filled['silentgear:coating']).toBeUndefined();
+    expect(changed).toBe(false);
+  });
+
+  it('附属槽已选有效材料 → 保留', () => {
+    const { filled, changed } = fillChoices(
+      views(),
+      { 'silentgear:main': { id: 'silentgear:iron' }, 'silentgear:coating': { id: 'silentgear:prismarine' } },
+      CORE,
+    );
+    expect(filled['silentgear:coating']).toEqual({ id: 'silentgear:prismarine' });
+    expect(changed).toBe(false);
+  });
+
+  it('附属槽失效材料 → 清空（空选）', () => {
+    const { filled, changed } = fillChoices(
+      views(),
+      { 'silentgear:main': { id: 'silentgear:iron' }, 'silentgear:coating': { id: 'silentgear:stone' } },
+      CORE,
+    );
+    expect(filled['silentgear:coating']).toBeUndefined();
+    expect(changed).toBe(true);
+  });
+
+  it('必填槽已选 → 保留原选择与品级', () => {
+    const { filled, changed } = fillChoices(views(), { 'silentgear:main': { id: 'silentgear:steel', grade: 'S' } }, CORE);
+    expect(filled['silentgear:main']).toEqual({ id: 'silentgear:steel', grade: 'S' });
+    expect(changed).toBe(false);
   });
 });

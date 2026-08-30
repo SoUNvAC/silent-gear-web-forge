@@ -1,17 +1,17 @@
 /**
- * Tool Preview —— 当前拼装：合成贴图 + 属性 + traits + 当前评分
+ * Tool Preview —— 当前拼装：属性 + traits + 当前评分（合成贴图大图见「工具贴图预览」面板）
  * 数据流：ToolBuild → Calc（computeGearStats）→ Rating（evaluate 单件）→ UI；
  * 单件评分是群体相对退化值，仅作参考，标注注明，不重写公式。
  */
-import { repo, calc, rating, assets } from '../context.js';
+import { repo, calc, rating } from '../context.js';
 import { state, subscribe } from '../state.js';
-import { el, clear, textureImg } from './shared.js';
+import { el, clear } from './shared.js';
 import { formatNum } from '../format.js';
 import { renderStats } from './stats.js';
 import { allSlotViews, fillChoices, upgradeAllowed, upgradeEffects } from '../selection.js';
 import { partName } from '../names.js';
 import type { GearAssembly, MaterialChoice } from '../../../src/calc/index.js';
-import type { Material, PartTypeId } from '../../../src/data/types.js';
+import type { PartTypeId } from '../../../src/data/types.js';
 
 export function mountPreview(mount: HTMLElement): void {
   const title = el('div', 'panel-title');
@@ -40,11 +40,13 @@ export function mountPreview(mount: HTMLElement): void {
       return;
     }
 
-    const { filled } = fillChoices(views, state.materialChoices);
+    const { filled } = fillChoices(views, state.materialChoices, new Set(gearType.requiredParts));
+    // 附属槽空选：未选的槽不装（不进装配/贴图/属性），必填槽已被 fillChoices 兜底
+    const chosen = views.filter((v) => filled[v.slot] !== undefined);
     const assembly: GearAssembly = {
       gearType: gearTypeId,
       slots: [
-        ...views.map((v) => {
+        ...chosen.map((v) => {
           const c = filled[v.slot]!;
           const m: MaterialChoice = { id: c.id };
           // 品级逐槽：从该槽选择读品级（grade 缺省 / NONE = 不附加）；不再用全局 state.grade
@@ -58,14 +60,6 @@ export function mountPreview(mount: HTMLElement): void {
           .map((p) => ({ slot: 'silentgear:misc_upgrade' as PartTypeId, part: p.id, materials: [] })),
       ],
     };
-
-    // 合成贴图
-    const texSlots = views
-      .map((v) => ({ slot: v.slot, material: filled[v.slot] ? repo.getMaterial(filled[v.slot]!.id) : undefined }))
-      .filter((x): x is { slot: typeof x.slot; material: Material } => !!x.material);
-    const iconBox = el('div', 'preview-icon');
-    if (texSlots.length > 0) iconBox.append(textureImg(assets.toolTexture(gearTypeId, texSlots), 72));
-    body.append(iconBox);
 
     try {
       const stats = calc.computeGearStats(assembly, {

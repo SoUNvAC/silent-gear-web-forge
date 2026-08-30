@@ -45,19 +45,27 @@ export function partLayerBaseName(partType: PartTypeId, hc: boolean): string {
   }
 }
 
-/** 图层绘制顺序（后画者在上）；toolTexture 合成按此序 */
-export const LAYER_DRAW_ORDER: readonly PartTypeId[] = [
-  'silentgear:rod',
-  'silentgear:main',
-  'silentgear:tip',
-  'silentgear:grip',
-  'silentgear:binding',
-  'silentgear:cord',
-  'silentgear:fletching',
-  'silentgear:setting',
-  'silentgear:lining',
-  'silentgear:coating',
-];
+/**
+ * 部件图层绘制顺序（后画者在上）：MAIN 因 construction.addFirst 永远最前（垫底），
+ * 其余部件按合成格顺序叠上（requiredParts 在前、addableSlots 附加在后），去重。
+ * 权威：GearItemRenderer 按 construction.parts() 序绘制；如剑 → main,rod,tip,binding,grip,coating。
+ */
+export function gearPartDrawOrder(
+  requiredParts: readonly PartTypeId[],
+  addableSlots: readonly PartTypeId[],
+): PartTypeId[] {
+  const order: PartTypeId[] = [];
+  const seen = new Set<PartTypeId>();
+  const push = (p: PartTypeId): void => {
+    if (seen.has(p)) return;
+    seen.add(p);
+    order.push(p);
+  };
+  push('silentgear:main');
+  for (const p of requiredParts) push(p);
+  for (const p of addableSlots) push(p);
+  return order;
+}
 
 /** 家族内图层候选：精确 → 互换 hc/lc → 裸名（部分家族只有 main.png/rod.png） */
 function layerCandidates(partType: PartTypeId, hc: boolean): string[] {

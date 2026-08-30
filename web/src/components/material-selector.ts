@@ -105,6 +105,19 @@ export function mountMaterialSelector(mount: HTMLElement): void {
         },
       ),
     );
+    // 附属槽支持空选：清空该槽选择（默认空选）
+    if (!gearType.requiredParts.includes(slot)) {
+      const clearBtn = el('button', 'mc-btn', '不选该槽');
+      clearBtn.type = 'button';
+      clearBtn.disabled = cur === undefined;
+      clearBtn.title = '该槽不装材料（空选）';
+      clearBtn.addEventListener('click', () => {
+        const next = { ...state.materialChoices };
+        delete next[slot];
+        update({ materialChoices: next });
+      });
+      cfgRow.append(clearBtn);
+    }
     body.append(cfgRow);
     body.append(el('div', 'mat-hint', `槽位：${slotName(slot)}（${slotMaterials.length} 种材料）`));
 

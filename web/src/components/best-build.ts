@@ -289,6 +289,8 @@ export function mountBestBuild(mount: HTMLElement): void {
       body.append(el('div', 'hint-text', '← 先选装备类型'));
       return;
     }
+    const gearType = repo.getGearType(gearTypeId);
+    if (!gearType) return;
 
     body.append(controlsRow());
 
@@ -335,7 +337,7 @@ export function mountBestBuild(mount: HTMLElement): void {
         .map((s) => ({ slot: s.slot, material: s.materials[0] ? repo.getMaterial(s.materials[0]!.id) : undefined }))
         .filter((s): s is { slot: typeof s.slot; material: NonNullable<typeof s.material> } => !!s.material);
       const iconBox = el('span', 'pz-icon');
-      if (slots.length > 0) iconBox.append(textureImg(assets.toolTexture(gearTypeId, slots), 40));
+      if (slots.length > 0) iconBox.append(textureImg(assets.toolTexture(gearType, slots), 40));
       card.append(iconBox);
       card.append(el('span', 'pz-cost', formatNum(b.total)));
       // 跨充能模式下每张卡标出它是哪个 charge 等级的最优（同一材质不同等级）

@@ -33,11 +33,12 @@ function slotBox(
     const tex = assets.partSlotTexture(gearTypeId, v.slot, mat);
     if (tex) box.append(textureImg(tex, 36));
   } else {
-    box.append(el('span', 'slot-empty', '?'));
+    // 空选（仅附属槽会出现，必填槽已被 fillChoices 兜底）：＋ 提示可点选
+    box.append(el('span', 'slot-empty', '+'));
   }
   slot.append(box);
   slot.append(el('div', 'slot-label', slotName(v.slot)));
-  const slotMaterial = el('div', 'slot-material', mat ? materialName(mat.id) : '—');
+  const slotMaterial = el('div', 'slot-material', mat ? materialName(mat.id) : '未选');
   // 品级/充能徽章：该槽材质品级（NONE 不显示）+ 整件充能等级（Lv.0 不显示），格式「S Charge II」简洁
   const gradeTok = choice?.grade && choice.grade !== 'NONE' ? choice.grade : '';
   const chargeTok =
@@ -81,7 +82,8 @@ export function mountAssembly(mount: HTMLElement): void {
       return;
     }
 
-    const { filled, changed } = fillChoices(views, state.materialChoices);
+    // 必填槽兜底、附属槽空选（默认空）——required 集决定哪些槽必须填
+    const { filled, changed } = fillChoices(views, state.materialChoices, new Set(gearType.requiredParts));
     if (changed) {
       update({ materialChoices: filled });
       return;

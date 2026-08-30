@@ -19,6 +19,7 @@ import { mountBestBuild } from './components/best-build.js';
 import { mountToolSelector } from './components/tool-selector.js';
 import { mountAssembly } from './components/assembly.js';
 import { mountMaterialSelector } from './components/material-selector.js';
+import { mountToolPreview } from './components/tool-preview.js';
 import { mountPreview } from './components/preview.js';
 import { mountInventory } from './components/inventory.js';
 
@@ -68,6 +69,7 @@ async function main(): Promise<void> {
   mountToolSelector(panel('tool-selector'));
   mountAssembly(panel('assembly'));
   mountMaterialSelector(panel('material-selector'));
+  mountToolPreview(panel('tool-preview'));
   mountPreview(panel('preview'));
   mountInventory(panel('inventory'));
 

@@ -25,10 +25,12 @@
       <main class="app-main">
         <!-- 3. 装配：每必填槽 = MC 方块槽，点击选材料 -->
         <section id="assembly" class="panel" data-panel="assembly" aria-label="装配"></section>
-        <!-- 4. 材料选择器：搜索 + Owned/Missing + 品级/充能 + 材质网格 -->
+        <!-- 4. 材料选择器：搜索 + Owned/Missing + 品级/充能 + 材质网格（横向缩半） -->
         <section id="material-selector" class="panel" data-panel="materials" aria-label="材料"></section>
-        <!-- 5. 当前拼装预览：合成贴图 + 属性 + traits + 当前评分 -->
-        <section id="preview" class="panel" data-panel="preview" aria-label="预览"></section>
+        <!-- 5. 工具贴图预览：当前拼装的合成大图（游戏规则逐层叠放） -->
+        <section id="tool-preview" class="panel" data-panel="tool-preview" aria-label="工具贴图预览"></section>
+        <!-- 6. 当前拼装：属性 + traits + 当前评分 -->
+        <section id="preview" class="panel" data-panel="preview" aria-label="当前拼装"></section>
       </main>
 
       <!-- 6. 底部材料库存：全部材料，点击切换拥有（未拥有 = 灰度） -->

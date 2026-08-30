@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import {
   gearFamilyDir,
   partLayerBaseName,
-  LAYER_DRAW_ORDER,
+  gearPartDrawOrder,
   resolveLayerRel,
   materialIconRel,
   isFragmentRel,
@@ -102,14 +102,66 @@ describe('materialIconRel', () => {
   });
 });
 
-describe('LAYER_DRAW_ORDER + traitSeed', () => {
-  it('绘制顺序 rod 在 main 之前（后画者在顶）', () => {
-    expect(LAYER_DRAW_ORDER.indexOf('silentgear:rod')).toBeLessThan(
-      LAYER_DRAW_ORDER.indexOf('silentgear:main'),
+describe('gearPartDrawOrder（MAIN 垫底 + 合成格顺序）', () => {
+  it('工具：main→rod→tip→binding→grip→coating（MAIN 永远垫底）', () => {
+    const order = gearPartDrawOrder(
+      ['silentgear:main', 'silentgear:rod'],
+      ['silentgear:tip', 'silentgear:binding', 'silentgear:grip', 'silentgear:coating'],
     );
-    expect(LAYER_DRAW_ORDER.indexOf('silentgear:main')).toBeLessThan(
-      LAYER_DRAW_ORDER.indexOf('silentgear:cord'),
+    expect(order).toEqual([
+      'silentgear:main',
+      'silentgear:rod',
+      'silentgear:tip',
+      'silentgear:binding',
+      'silentgear:grip',
+      'silentgear:coating',
+    ]);
+  });
+  it('弓：cord 在 requiredParts 又在 addableSlots → 去重保留 required 位置（rod 后）', () => {
+    const order = gearPartDrawOrder(
+      ['silentgear:main', 'silentgear:rod', 'silentgear:cord'],
+      ['silentgear:tip', 'silentgear:binding', 'silentgear:grip', 'silentgear:coating', 'silentgear:cord'],
     );
+    expect(order).toEqual([
+      'silentgear:main',
+      'silentgear:rod',
+      'silentgear:cord',
+      'silentgear:tip',
+      'silentgear:binding',
+      'silentgear:grip',
+      'silentgear:coating',
+    ]);
+  });
+  it('箭：fletching 在 rod 后、tip 前', () => {
+    const order = gearPartDrawOrder(
+      ['silentgear:main', 'silentgear:rod', 'silentgear:fletching'],
+      ['silentgear:tip', 'silentgear:binding', 'silentgear:coating', 'silentgear:fletching'],
+    );
+    expect(order).toEqual([
+      'silentgear:main',
+      'silentgear:rod',
+      'silentgear:fletching',
+      'silentgear:tip',
+      'silentgear:binding',
+      'silentgear:coating',
+    ]);
+  });
+  it('curio：setting 随 requiredParts，binding 在 coating 前', () => {
+    const order = gearPartDrawOrder(
+      ['silentgear:main', 'silentgear:setting'],
+      ['silentgear:tip', 'silentgear:binding', 'silentgear:coating'],
+    );
+    expect(order).toEqual([
+      'silentgear:main',
+      'silentgear:setting',
+      'silentgear:tip',
+      'silentgear:binding',
+      'silentgear:coating',
+    ]);
+  });
+  it('main 强制垫底：requiredParts 里没有也排最前', () => {
+    const order = gearPartDrawOrder(['silentgear:rod'], ['silentgear:tip']);
+    expect(order[0]).toBe('silentgear:main');
   });
   it('trait 种子确定性且互异', () => {
     const a = traitSeed('silentgear:versatile');

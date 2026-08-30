@@ -64,7 +64,7 @@ function typeIcon(gearTypeId: string): HTMLImageElement {
       const slots = views
         .map((v) => ({ slot: v.slot, material: v.materials[0] }))
         .filter((s): s is { slot: typeof s.slot; material: NonNullable<typeof s.material> } => !!s.material);
-      canvas = assets.toolTexture(gearTypeId, slots);
+      canvas = assets.toolTexture(gearType, slots);
     } catch {
       canvas = undefined;
     }
