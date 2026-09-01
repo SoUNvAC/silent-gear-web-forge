@@ -43,13 +43,14 @@ export function fillChoices(
 /** Best Build 结果装配里的一个槽（结构兼容 GearAssembly['slots']；材质自带品级） */
 export interface BuildAssemblySlot {
   slot: PartTypeId;
+  composition?: 'dynamic_compound' | 'compound_part';
   materials: readonly MaterialChoice[];
 }
 
 /**
  * Best Build 结果装配 → 装配面板的单材选择（materialChoices）。
- * 复合槽（materials ≥2）只取主材 materials[0]（装配 UI 是单材编辑器，视觉近似；
- * 完整 A+B 复合需面板支持多材料，v2）。主材品级随应用带进该槽（Best Build 搜索结果
+ * 复合槽的单材选择器仍以主材 materials[0] 为入口；完整子材料由
+ * buildCompoundChoicesFromBuild 同步保存。主材品级随应用带进该槽（Best Build 搜索结果
  * 自带搜索品级；grade 缺省 / 'NONE' 不写字段）。升级部件槽（misc_upgrade）不覆盖
  * —— Best Build 不搜升级件，应用结果不应清掉用户已选的升级。
  */
@@ -63,6 +64,18 @@ export function buildChoicesFromBuild(slots: readonly BuildAssemblySlot[]): Part
       if (primary.grade && primary.grade !== 'NONE') c.grade = primary.grade;
       choices[s.slot] = c;
     }
+  }
+  return choices;
+}
+
+/** Best Build 结果中保留完整动态复合子材料，避免点击卡片后退化成首个单材料。 */
+export function buildCompoundChoicesFromBuild(
+  slots: readonly BuildAssemblySlot[],
+): Partial<Record<PartTypeId, MaterialChoice[]>> {
+  const choices: Partial<Record<PartTypeId, MaterialChoice[]>> = {};
+  for (const s of slots) {
+    if (s.slot === 'silentgear:misc_upgrade' || s.materials.length < 2 || s.composition === 'compound_part') continue;
+    choices[s.slot] = s.materials.map((mc) => ({ ...mc }));
   }
   return choices;
 }

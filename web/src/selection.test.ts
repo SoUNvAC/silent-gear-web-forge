@@ -1,10 +1,10 @@
 /**
  * 装配选择辅助 —— buildChoicesFromBuild（点击 Best Build 卡片 → materialChoices 映射）
  *
- * 纯函数测试：单材/复合（取主材）/附属槽/升级件不覆盖。
+ * 纯函数测试：单材/复合（主材入口 + 完整子材料）/附属槽/升级件不覆盖。
  */
 import { describe, expect, it } from 'vitest';
-import { buildChoicesFromBuild, fillChoices } from './selection.js';
+import { buildChoicesFromBuild, buildCompoundChoicesFromBuild, fillChoices } from './selection.js';
 import type { PartTypeId } from '../../src/data/types.js';
 import type { CandidateSlotView } from '../../src/optimizer/index.js';
 
@@ -25,7 +25,7 @@ describe('buildChoicesFromBuild', () => {
     });
   });
 
-  it('复合槽只取主材 materials[0]（装配面板单材编辑器，近似）', () => {
+  it('复合槽的单材入口取主材 materials[0]', () => {
     const choices = buildChoicesFromBuild([
       { slot: 'silentgear:main', materials: [{ id: 'silentgear:iron' }, { id: 'silentgear:steel' }] },
       { slot: 'silentgear:rod', materials: [{ id: 'silentgear:basalt' }] },
@@ -65,6 +65,28 @@ describe('buildChoicesFromBuild', () => {
       { slot: 'silentgear:main', materials: [{ id: 'silentgear:iron', grade: 'NONE' }] },
     ]);
     expect(choices['silentgear:main']).toEqual({ id: 'silentgear:iron' });
+  });
+});
+
+describe('buildCompoundChoicesFromBuild', () => {
+  it('完整保留复合槽，忽略单材与升级槽', () => {
+    const compounds = buildCompoundChoicesFromBuild([
+      {
+        slot: 'silentgear:main',
+        materials: [
+          { id: 'silentgear:iron', grade: 'A' },
+          { id: 'silentgear:diamond', grade: 'A' },
+        ],
+      },
+      { slot: 'silentgear:rod', materials: [{ id: 'silentgear:iron' }] },
+      { slot: 'silentgear:misc_upgrade', materials: [{ id: 'silentgear:iron' }, { id: 'silentgear:diamond' }] },
+    ]);
+    expect(compounds).toEqual({
+      'silentgear:main': [
+        { id: 'silentgear:iron', grade: 'A' },
+        { id: 'silentgear:diamond', grade: 'A' },
+      ],
+    });
   });
 });
 

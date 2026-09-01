@@ -63,6 +63,51 @@ describe('GearCalcEngine §7 铁镐算例', () => {
   });
 });
 
+describe('GearCalcEngine WEAPON_STAT_ALGORITHM 动态复合材料顺序', () => {
+  function ironDiamondSword(grade?: 'A', crude = false): GearAssembly {
+    return {
+      gearType: 'silentgear:sword',
+      slots: [
+        {
+          slot: 'silentgear:main',
+          part: 'silentgear:sword_blade',
+          // 旧数据结构把复合成品强化复制在子材料上；引擎只读取第一项作为成品元数据，
+          // 不允许子材料先强化后混合。
+          materials: [
+            { id: 'silentgear:iron', grade, crude },
+            { id: 'silentgear:diamond', grade, crude },
+          ],
+        },
+        { slot: 'silentgear:rod', part: 'silentgear:rod', materials: [{ id: 'silentgear:iron' }] },
+      ],
+    };
+  }
+
+  it('§9.3 未强化铁+钻石：先压缩再协同', () => {
+    const s = engine.computeGearStats(ironDiamondSword());
+    expect(s.final.attack_damage).toBeCloseTo(5.3822092, 6);
+  });
+
+  it('§9.3 A级+充能II：compress → synergy → grade → starcharged', () => {
+    const s = engine.computeGearStats(ironDiamondSword('A'), { chargeLevel: 2 });
+    expect(s.final.attack_damage).toBeCloseTo(7.0033605, 6);
+  });
+
+  it('§9.3 粗制成品：crude 在 grade 与 starcharged 之后作用', () => {
+    const s = engine.computeGearStats(ironDiamondSword('A', true), { chargeLevel: 2 });
+    expect(s.final.attack_damage).toBeCloseTo(6.2026884, 6);
+  });
+
+  it('§7.2 普通多材料零件：逐材料强化、零件层压缩，不应用动态合金 synergy', () => {
+    const assembly = ironDiamondSword('A');
+    assembly.slots[0]!.composition = 'compound_part';
+    const s = engine.computeGearStats(assembly, { chargeLevel: 2 });
+    // 子材料分别得到 iron=3.5、diamond=4.75，再在零件层压缩，最后加剑刃 +3。
+    expect(s.final.attack_damage).toBeCloseTo(7.1702899, 6);
+    expect(engine.computeCompoundSynergy(assembly.slots[0]!)).toBe(1);
+  });
+});
+
 describe('GearCalcEngine 校验与特殊机制', () => {
   it('黑名单材料拒绝：example（blacklist all）', () => {
     const assembly: GearAssembly = {
@@ -295,7 +340,7 @@ describe('GearCalcEngine trait 条件求值门控（attachable-parts-reference.m
     expect(engine.computeGearStats(assembly).traits).toContainEqual({ trait: 'silentgear:lustrous', level: 1 });
   });
 
-  it('复合集成：[iron,iron] main S=1 同单材；[iron,diamond] S≠1', () => {
+  it('复合集成：[iron,iron] 命中文档 §10.1 的 S=1 上游边界；[iron,diamond] S≠1', () => {
     const single: GearAssembly = {
       gearType: 'silentgear:pickaxe',
       slots: [
@@ -318,8 +363,8 @@ describe('GearCalcEngine trait 条件求值门控（attachable-parts-reference.m
       ],
     };
 
-    // [iron,iron]：x=1 → S=1 → 耐久同单材
-    expect(engine.computeGearStats(samePair).final.durability).toBeCloseTo(engine.computeGearStats(single).final.durability!, 6);
+    // [iron,iron]：x=1 → S=1；CompoundMaterial 上游实现会丢失受 synergy 影响的材料修正。
+    expect(engine.computeGearStats(samePair).final.durability).toBe(0);
 
     // [iron,diamond]：S≠1（无共享类别 → 减 P、稀有度差惩罚）→ 耐久 ≠ 单材 iron 主槽
     const sDiff = engine.computeGearStats(diffPair);

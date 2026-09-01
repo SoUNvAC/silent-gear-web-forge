@@ -22,6 +22,7 @@ import { mountMaterialSelector } from './components/material-selector.js';
 import { mountToolPreview } from './components/tool-preview.js';
 import { mountPreview } from './components/preview.js';
 import { mountInventory } from './components/inventory.js';
+import { mountMobileWorkflow } from './components/mobile-workflow.js';
 
 const boot = document.getElementById('boot');
 
@@ -67,6 +68,7 @@ async function main(): Promise<void> {
   if (boot) boot.remove();
   mountBestBuild(panel('best-build'));
   mountToolSelector(panel('tool-selector'));
+  mountMobileWorkflow(panel('mobile-workflow'), panel('app-main'));
   mountAssembly(panel('assembly'));
   mountMaterialSelector(panel('material-selector'));
   mountToolPreview(panel('tool-preview'));

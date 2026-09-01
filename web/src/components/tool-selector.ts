@@ -75,17 +75,62 @@ function typeIcon(gearTypeId: string): HTMLImageElement {
 
 export function mountToolSelector(mount: HTMLElement): void {
   const title = el('div', 'panel-title');
-  title.append(el('span', '', '装备类型'), el('span', 'hint', '点选，换类型清空装配'));
   const body = el('div', 'panel-body');
   mount.append(title, body);
+  let expanded = false;
+  let query = '';
 
   const render = (): void => {
+    title.replaceChildren();
+    title.append(
+      el('span', '', '当前装备'),
+      el('span', 'hint', state.gearTypeId ? `已选择：${gearTypeName(state.gearTypeId)}` : '请选择装备'),
+    );
     clear(body);
+
+    const current = state.gearTypeId ? repo.getGearType(state.gearTypeId) : undefined;
+    const summary = el('div', 'tool-current');
+    const identity = el('div', 'tool-current-identity');
+    if (current) identity.append(typeIcon(current.id));
+    const copy = el('div', 'tool-current-copy');
+    copy.append(el('strong', '', current ? gearTypeName(current.id) : '尚未选择'));
+    copy.append(el('span', '', current ? '点击槽位开始配装，或更换装备类型' : '选择一种装备开始配装'));
+    identity.append(copy);
+    const toggle = el('button', 'mc-btn tool-picker-toggle', expanded ? '收起类型' : '更换装备');
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', String(expanded));
+    toggle.addEventListener('click', () => {
+      expanded = !expanded;
+      render();
+    });
+    summary.append(identity, toggle);
+    body.append(summary);
+
+    if (!expanded) return;
+
+    const search = el('input', 'tool-search');
+    search.type = 'search';
+    search.placeholder = '搜索装备名称…';
+    search.value = query;
+    search.setAttribute('aria-label', '搜索装备类型');
+    search.addEventListener('input', () => {
+      query = search.value;
+      render();
+      const next = body.querySelector<HTMLInputElement>('.tool-search');
+      next?.focus();
+      next?.setSelectionRange(query.length, query.length);
+    });
+    body.append(search);
+
+    const picker = el('div', 'tool-picker');
+    const needle = query.trim().toLowerCase();
     for (const g of buildGroups()) {
+      const types = g.types.filter((t) => !needle || t.label.toLowerCase().includes(needle) || t.id.toLowerCase().includes(needle));
+      if (types.length === 0) continue;
       // 横向流动行：标签 + 按钮 inline 排，自动换行填满宽度（省高度、消除右留白）
       const fam = el('div', 'family-row');
-      fam.append(el('div', 'family-label', `${familyName(g.family)} · ${g.types.length}`));
-      for (const t of g.types) {
+      fam.append(el('div', 'family-label', `${familyName(g.family)} · ${types.length}`));
+      for (const t of types) {
         const btn = el('button', 'tool-btn' + (t.id === state.gearTypeId ? ' active' : ''));
         btn.append(typeIcon(t.id));
         btn.append(el('span', '', t.label));
@@ -93,14 +138,21 @@ export function mountToolSelector(mount: HTMLElement): void {
           if (state.gearTypeId !== t.id) {
             // 先清空装配/旧 Best Build 状态，再换类型 —— update 会触发 computeBest → bestRunning:true，
             // 顺序反了的话 resetSelection 会把 busy 状态清掉，面板显示「等待计算…」而不是 spinner
+            expanded = false;
+            query = '';
             resetSelection();
             update({ gearTypeId: t.id });
+          } else {
+            expanded = false;
+            render();
           }
         });
         fam.append(btn);
       }
-      body.append(fam);
+      picker.append(fam);
     }
+    if (picker.childElementCount === 0) picker.append(el('div', 'mat-empty', '没有匹配的装备'));
+    body.append(picker);
   };
 
   subscribe(render);

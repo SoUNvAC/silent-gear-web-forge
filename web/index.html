@@ -16,24 +16,23 @@
         </div>
       </header>
 
-      <!-- 1. 当前工具类型的最优拼装（Optimizer weighted top-1） -->
-      <section id="best-build" class="panel best-build-bar" aria-label="最佳拼装"></section>
-
-      <!-- 2. 工具类型选择器（34 类型，合成图标 + 中文名） -->
+      <!-- 当前装备：紧凑入口，完整类型按需展开 -->
       <section id="tool-selector" class="panel tool-selector" aria-label="装备类型"></section>
 
-      <main class="app-main">
-        <!-- 3. 装配：每必填槽 = MC 方块槽，点击选材料 -->
+      <nav id="mobile-workflow" class="mobile-workflow" aria-label="配装步骤"></nav>
+
+      <main id="app-main" class="app-main">
+        <!-- 主流程：装配 → 选材 → 结果 -->
         <section id="assembly" class="panel" data-panel="assembly" aria-label="装配"></section>
-        <!-- 4. 材料选择器：搜索 + Owned/Missing + 品级/充能 + 材质网格（横向缩半） -->
         <section id="material-selector" class="panel" data-panel="materials" aria-label="材料"></section>
-        <!-- 5. 工具贴图预览：当前拼装的合成大图（游戏规则逐层叠放） -->
-        <section id="tool-preview" class="panel" data-panel="tool-preview" aria-label="工具贴图预览"></section>
-        <!-- 6. 当前拼装：属性 + traits + 当前评分 -->
-        <section id="preview" class="panel" data-panel="preview" aria-label="当前拼装"></section>
+        <aside class="result-column" aria-label="拼装结果">
+          <section id="tool-preview" class="panel" data-panel="tool-preview" aria-label="工具贴图预览"></section>
+          <section id="preview" class="panel" data-panel="preview" aria-label="当前拼装"></section>
+        </aside>
       </main>
 
-      <!-- 6. 底部材料库存：全部材料，点击切换拥有（未拥有 = 灰度） -->
+      <!-- 智能推荐与库存属于辅助流程，放在工作台之后 -->
+      <section id="best-build" class="panel best-build-bar" aria-label="最佳拼装"></section>
       <section id="inventory" class="panel inventory" aria-label="材料库存"></section>
 
       <div id="boot" class="boot">

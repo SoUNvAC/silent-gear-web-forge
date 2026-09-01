@@ -119,3 +119,16 @@ export function partName(id: string): string {
   const bare = BARE(id);
   return PART_ZH[bare] ?? materialNameEn(id);
 }
+
+/** 常见特质中文名；未收录时保留可读英文，不伪造含义。 */
+const TRAIT_ZH: Record<string, string> = {
+  accelerate: '加速', brittle: '易碎', chipping: '崩刃', crude: '粗制', crushing: '粉碎',
+  dulling: '钝化', eroded: '侵蚀', flexible: '柔韧', hard: '坚硬', jagged: '锯齿',
+  light: '轻盈', lustrous: '璀璨', malleable: '可塑', organic: '有机', rustic: '质朴',
+  sharp: '锋利', soft: '柔软', synergistic: '协同', magnetic: '磁力', spoon: '勺子',
+};
+
+export function traitName(id: string): string {
+  const bare = BARE(id);
+  return TRAIT_ZH[bare] ?? bare.replace(/_/g, ' ');
+}

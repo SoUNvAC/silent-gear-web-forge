@@ -10,9 +10,9 @@
 import { repo, calc, assets } from '../context.js';
 import { state, update, subscribe } from '../state.js';
 import type { ChargeMode } from '../state.js';
-import { gearTypeName, materialName, slotName } from '../names.js';
+import { gearTypeName, materialName, slotName, traitName } from '../names.js';
 import { el, clear, textureImg, makeSelect } from './shared.js';
-import { statLabel, formatNum } from '../format.js';
+import { displayedStatLabel, displayedStatValue, formatNum } from '../format.js';
 import type { OptBuild } from '../../../src/optimizer/index.js';
 import type { RatingProfile } from '../../../src/rating/index.js';
 import type { GradeLevel } from '../../../src/calc/index.js';
@@ -21,7 +21,7 @@ import { ownedMaterialPool, CHARGE_LEVELS } from '../best-queue.js';
 import type { ChargeBuild } from '../best-queue.js';
 import { computeBestAsync } from '../best-worker-client.js';
 import type { BestComputeRequest } from '../best-worker-client.js';
-import { buildChoicesFromBuild } from '../selection.js';
+import { buildChoicesFromBuild, buildCompoundChoicesFromBuild } from '../selection.js';
 import { notOwnedIds } from '../owned.js';
 import { GRADE_LEVELS } from '../grade.js';
 import type { Material, PartTypeId } from '../../../src/data/types.js';
@@ -106,15 +106,17 @@ function computeBest(gearTypeId: string): void {
 }
 
 /**
- * 点击卡片 → 把该结果的槽位材料写进下方装配（materialChoices），预览实时重算。
- * 复合槽只取主材（装配面板是单材编辑器）；升级件不动（Best Build 不搜升级件）。
+ * 点击卡片 → 把该结果的完整槽位材料写进下方装配，预览实时重算。
+ * 动态复合槽保留全部子材料；升级件不动（Best Build 不搜升级件）。
  * 充能等级同步到该卡所在等级 → 预览属性与卡片对得上（'all' 模式各卡等级不同）。
  */
 function applyBuild(b: ChargeBuild, gearTypeId: string): void {
   update({
     materialChoices: buildChoicesFromBuild(b.assembly.slots),
+    compoundChoices: buildCompoundChoicesFromBuild(b.assembly.slots),
     selectedSlot: null,
     chargeLevel: b.chargeLevel,
+    mobileStep: 'result',
   });
 }
 
@@ -130,9 +132,27 @@ function coreStatRows(b: OptBuild, profile: RatingProfile | null): HTMLElement[]
     }
     const v = b.stats.final[c.property];
     if (v === undefined) continue;
-    out.push(statRow(statLabel(c.property), formatNum(v)));
+    out.push(statRow(displayedStatLabel(c.property), formatNum(displayedStatValue(c.property, v))));
   }
   return out;
+}
+
+function recommendationReason(profile: RatingProfile | null): string {
+  const labels: string[] = [];
+  for (const c of profile?.criteria ?? []) {
+    if (c.source === 'trait') continue;
+    const label = c.source === 'tier' ? '挖掘等级' : displayedStatLabel(c.property);
+    if (!labels.includes(label)) labels.push(label);
+    if (labels.length === 2) break;
+  }
+  return labels.length > 0 ? `侧重 ${labels.join(' · ')}` : '按综合属性排序';
+}
+
+function materialSummary(b: ChargeBuild): string {
+  return b.assembly.slots
+    .filter((s) => s.materials.length > 0)
+    .map((s) => `${slotName(s.slot)} ${s.materials.map((m) => materialName(m.id)).join('+')}`)
+    .join(' · ');
 }
 
 function statRow(k: string, v: string): HTMLElement {
@@ -152,7 +172,7 @@ function popoverContent(gearTypeId: string, b: ChargeBuild): HTMLElement[] {
     head.append(el('span', 'pp-charge', `⚡充能 Lv.${b.chargeLevel}`));
   }
   out.push(head);
-  out.push(el('div', 'pp-profile', `profile：${state.bestProfile?.id ?? '默认'}`));
+  out.push(el('div', 'pp-profile', `评分模型：${gearTypeName(gearTypeId)}综合权重`));
 
   out.push(el('div', 'pp-sec', '槽位材料'));
   for (const s of b.assembly.slots) {
@@ -186,8 +206,7 @@ function popoverContent(gearTypeId: string, b: ChargeBuild): HTMLElement[] {
     for (const tr of b.stats.traits) {
       const chip = el('span', 'pp-trait');
       chip.append(textureImg(assets.traitTexture(tr.trait), 10));
-      const bare = tr.trait.replace(/^[^:]+:/, '').replace(/_/g, ' ');
-      chip.append(el('span', '', `${bare} Lv.${tr.level}`));
+      chip.append(el('span', '', `${traitName(tr.trait)} Lv.${tr.level}`));
       t.append(chip);
     }
     out.push(t);
@@ -206,10 +225,10 @@ function controlsRow(): HTMLElement {
       (v) => update({ grade: v as GradeLevel }),
     ),
   );
-  row.append(el('label', '', '充能'));
+  row.append(el('label', '', '星光充能'));
   row.append(
     makeSelect(
-      [{ value: 'all', label: '全部(0-3)' }, ...CHARGE_LEVELS.map((lv) => ({ value: String(lv), label: `Lv.${lv}` }))],
+      [{ value: 'all', label: '自动选择' }, ...CHARGE_LEVELS.map((lv) => ({ value: String(lv), label: `Lv.${lv}` }))],
       state.bestChargeMode,
       (v) => update({ bestChargeMode: v as ChargeMode }),
     ),
@@ -221,7 +240,7 @@ function controlsRow(): HTMLElement {
   cb.checked = state.bestConsiderAddons;
   cb.addEventListener('change', () => update({ bestConsiderAddons: cb.checked }));
   check.append(cb);
-  check.append(el('span', '', '考虑附属加成'));
+  check.append(el('span', '', '包含附属部件'));
   const tip = el('div', 'mc-tooltip');
   tip.append(el('span', '', '搜索范围含 tip/binding/coating 等附属槽（核心 Top-K × 附属全组合）'));
   check.append(tip);
@@ -233,7 +252,7 @@ function controlsRow(): HTMLElement {
   cb2.checked = state.bestConsiderCompound;
   cb2.addEventListener('change', () => update({ bestConsiderCompound: cb2.checked }));
   check2.append(cb2);
-  check2.append(el('span', '', '考虑复合材质'));
+  check2.append(el('span', '', '包含复合材料'));
   const tip2 = el('div', 'mc-tooltip');
   tip2.append(el('span', '', '复合只搜单材料最优解里的顶级材质（每槽 2 材料对，synergy 系数 S 生效；预算护栏 3 万）'));
   check2.append(tip2);
@@ -254,9 +273,11 @@ function controlsRow(): HTMLElement {
 
 export function mountBestBuild(mount: HTMLElement): void {
   const title = el('div', 'panel-title');
-  title.append(el('span', '', '最佳拼装'), el('span', 'hint', `Optimizer 加权 Top-${TOP_N} · 悬浮看详情 · 点击应用到装配`));
+  title.append(el('span', '', '智能推荐'), el('span', 'hint', '根据当前库存与装备权重计算'));
   const body = el('div', 'panel-body');
   mount.append(title, body);
+  let showAll = false;
+  let settingsOpen = false;
 
   // 弹层挂 body + fixed 定位：队列有 overflow-x:auto，挂在队列内会被裁掉
   const popover = el('div', 'pz-popover');
@@ -292,7 +313,14 @@ export function mountBestBuild(mount: HTMLElement): void {
     const gearType = repo.getGearType(gearTypeId);
     if (!gearType) return;
 
-    body.append(controlsRow());
+    const settings = el('details', 'bb-settings') as HTMLDetailsElement;
+    settings.open = settingsOpen;
+    settings.append(el('summary', '', '推荐设置'));
+    settings.append(controlsRow());
+    settings.addEventListener('toggle', () => {
+      settingsOpen = settings.open;
+    });
+    body.append(settings);
 
     if (state.bestRunning) {
       const busyMsg = state.bestConsiderCompound
@@ -326,10 +354,18 @@ export function mountBestBuild(mount: HTMLElement): void {
       return;
     }
 
-    const queue = el('div', 'pz-queue');
+    const intro = el('div', 'recommendation-intro');
+    intro.append(
+      el('strong', '', `为${gearTypeName(gearTypeId)}找到 ${builds.length} 个候选方案`),
+      el('span', '', `${recommendationReason(state.bestProfile)}；分数是候选之间的相对比较。`),
+    );
+    body.append(intro);
 
-    builds.forEach((b, i) => {
-      const card = el('button', 'pz-card');
+    const queue = el('div', 'recommendation-grid');
+
+    builds.slice(0, showAll ? TOP_N : 3).forEach((b, i) => {
+      const card = el('article', 'recommendation-card');
+      card.tabIndex = 0;
       card.append(el('span', 'pz-rank' + (i === 0 ? ' r1' : ''), String(i + 1)));
 
       // 卡图标只取每槽首材质（视觉主材；复合槽的 A+B 详情见悬浮弹层）
@@ -339,18 +375,41 @@ export function mountBestBuild(mount: HTMLElement): void {
       const iconBox = el('span', 'pz-icon');
       if (slots.length > 0) iconBox.append(textureImg(assets.toolTexture(gearType, slots), 40));
       card.append(iconBox);
-      card.append(el('span', 'pz-cost', formatNum(b.total)));
-      // 跨充能模式下每张卡标出它是哪个 charge 等级的最优（同一材质不同等级）
-      if (state.bestChargeMode === 'all') card.append(el('span', 'pz-charge', `⚡${b.chargeLevel}`));
+      const copy = el('div', 'recommendation-copy');
+      copy.append(el('strong', '', i === 0 ? '综合首选' : `备选方案 ${i + 1}`));
+      copy.append(el('span', 'recommendation-materials', materialSummary(b)));
+      copy.append(el('span', 'recommendation-reason', recommendationReason(state.bestProfile)));
+      card.append(copy);
 
-      // 点击 = 把该组合应用到下方装配（材料写进 materialChoices，预览实时重算）
-      card.addEventListener('click', () => applyBuild(b, gearTypeId));
+      const score = el('div', 'recommendation-score');
+      score.append(el('span', '', '相对评分'), el('strong', '', String(Math.round(b.total * 100))));
+      card.append(score);
+      // 跨充能模式下每张卡标出它是哪个 charge 等级的最优（同一材质不同等级）
+      if (state.bestChargeMode === 'all') card.append(el('span', 'pz-charge', `充能 ${b.chargeLevel}`));
+
+      const apply = el('button', 'mc-btn recommendation-apply', '应用方案');
+      apply.type = 'button';
+      apply.addEventListener('click', () => applyBuild(b, gearTypeId));
+      card.append(apply);
+
       card.addEventListener('mouseenter', () => showPop(card, b, gearTypeId));
       card.addEventListener('mouseleave', hidePop);
+      card.addEventListener('focus', () => showPop(card, b, gearTypeId));
+      card.addEventListener('blur', hidePop);
       queue.append(card);
     });
     queue.addEventListener('mouseleave', hidePop);
     body.append(queue);
+
+    if (builds.length > 3) {
+      const more = el('button', 'mc-btn recommendation-more', showAll ? '收起备选方案' : `查看全部 ${builds.length} 个方案`);
+      more.type = 'button';
+      more.addEventListener('click', () => {
+        showAll = !showAll;
+        render();
+      });
+      body.append(more);
+    }
   };
 
   // 换类型 / 品级 / 充能模式 → 重新计算（diff 键防无关状态误触发）

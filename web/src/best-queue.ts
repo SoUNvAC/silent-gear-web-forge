@@ -341,6 +341,7 @@ export function generateCompoundAssemblies(
               assignments.push({
                 slot: compoundSlot,
                 part: parts[ci]!.id,
+                composition: 'dynamic_compound',
                 materials: [{ id: set[i]!, ...gradeOpt }, { id: set[j]!, ...gradeOpt }],
               });
             } else {

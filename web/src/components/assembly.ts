@@ -24,9 +24,12 @@ function slotBox(
   selected: PartTypeId | null,
 ): HTMLElement {
   const choice = filled[v.slot];
-  const mat = choice ? repo.getMaterial(choice.id) : undefined;
+  const compounds = state.compoundChoices[v.slot];
+  const materialChoices = compounds && compounds.length >= 2 ? compounds : choice ? [choice] : [];
+  const mats = materialChoices.map((mc) => repo.getMaterial(mc.id)).filter((m): m is NonNullable<typeof m> => !!m);
+  const mat = mats[0];
   const slot = el('button', 'slot' + (selected === v.slot ? ' selected' : ''));
-  slot.addEventListener('click', () => update({ selectedSlot: v.slot }));
+  slot.addEventListener('click', () => update({ selectedSlot: v.slot, mobileStep: 'materials' }));
 
   const box = el('div', 'slot-box');
   if (mat) {
@@ -38,18 +41,18 @@ function slotBox(
   }
   slot.append(box);
   slot.append(el('div', 'slot-label', slotName(v.slot)));
-  const slotMaterial = el('div', 'slot-material', mat ? materialName(mat.id) : '未选');
+  const slotMaterial = el('div', 'slot-material', mats.length > 0 ? mats.map((m) => materialName(m.id)).join(' + ') : '未选');
   // 品级/充能徽章：该槽材质品级（NONE 不显示）+ 整件充能等级（Lv.0 不显示），格式「S Charge II」简洁
   const gradeTok = choice?.grade && choice.grade !== 'NONE' ? choice.grade : '';
   const chargeTok =
-    state.chargeLevel > 0 ? `Charge ${CHARGE_ROMAN[state.chargeLevel] ?? String(state.chargeLevel)}` : '';
+    state.chargeLevel > 0 ? `充能 ${CHARGE_ROMAN[state.chargeLevel] ?? String(state.chargeLevel)}` : '';
   const badge = [gradeTok, chargeTok].filter(Boolean).join(' ');
   if (badge) slotMaterial.append(el('span', 'slot-grade', ` · ${badge}`));
   slot.append(slotMaterial);
 
   const tip = el('div', 'mc-tooltip');
   tip.append(
-    el('span', '', mat ? `${materialName(mat.id)}${badge ? `（${badge}）` : ''}` : '未选材料'),
+    el('span', '', mats.length > 0 ? `${mats.map((m) => materialName(m.id)).join(' + ')}${badge ? `（${badge}）` : ''}` : '未选材料'),
   );
   slot.append(tip);
   return slot;

@@ -1,15 +1,12 @@
 /**
- * Tool Preview —— 当前拼装：属性 + traits + 当前评分（合成贴图大图见「工具贴图预览」面板）
- * 数据流：ToolBuild → Calc（computeGearStats）→ Rating（evaluate 单件）→ UI；
- * 单件评分是群体相对退化值，仅作参考，标注注明，不重写公式。
+ * Tool Preview —— 当前拼装：关键属性 + traits（合成贴图见同侧结果栏）。
  */
-import { repo, calc, rating } from '../context.js';
+import { repo, calc } from '../context.js';
 import { state, subscribe } from '../state.js';
 import { el, clear } from './shared.js';
-import { formatNum } from '../format.js';
 import { renderStats } from './stats.js';
 import { allSlotViews, fillChoices, upgradeAllowed, upgradeEffects } from '../selection.js';
-import { partName } from '../names.js';
+import { gearTypeName, materialName, partName } from '../names.js';
 import type { GearAssembly, MaterialChoice } from '../../../src/calc/index.js';
 import type { PartTypeId } from '../../../src/data/types.js';
 
@@ -48,6 +45,10 @@ export function mountPreview(mount: HTMLElement): void {
       slots: [
         ...chosen.map((v) => {
           const c = filled[v.slot]!;
+          const compound = state.compoundChoices[v.slot];
+          if (compound && compound.length >= 2) {
+            return { slot: v.slot, part: v.part.id, materials: compound.map((mc) => ({ ...mc })) };
+          }
           const m: MaterialChoice = { id: c.id };
           // 品级逐槽：从该槽选择读品级（grade 缺省 / NONE = 不附加）；不再用全局 state.grade
           if (c.grade && c.grade !== 'NONE') m.grade = c.grade;
@@ -67,19 +68,17 @@ export function mountPreview(mount: HTMLElement): void {
         damageRatio: state.damageRatio,
       });
 
-      // 当前评分：RatingEngine.evaluate 单件（群体相对 → 退化分）
-      let ratingText: string;
-      try {
-        const outcome = rating.evaluate([stats], 'weighted');
-        const total = outcome.builds[0]?.total;
-        ratingText = `当前评分 ${formatNum(total ?? 0)}（${outcome.profile?.id ?? '默认'}）`;
-      } catch (err) {
-        ratingText = `评分不可用：${err instanceof Error ? err.message : String(err)}`;
-      }
-      const rb = el('div', 'rating-box');
-      rb.append(el('div', 'rating-value', ratingText));
-      rb.append(el('div', 'rating-note', '单件群体相对评分，仅供参考'));
-      body.append(rb);
+      const summary = el('div', 'build-summary');
+      const summaryCopy = el('div', 'build-summary-copy');
+      summaryCopy.append(el('strong', '', gearTypeName(gearTypeId)));
+      const materialText = assembly.slots
+        .filter((s) => s.materials.length > 0)
+        .map((s) => s.materials.map((m) => materialName(m.id)).join('+'))
+        .join(' · ');
+      summaryCopy.append(el('span', '', materialText || '尚未装配材料'));
+      summary.append(summaryCopy);
+      if (state.chargeLevel > 0) summary.append(el('span', 'build-charge', `星光充能 Lv.${state.chargeLevel}`));
+      body.append(summary);
 
       renderStats(body, gearType, stats);
 

@@ -13,16 +13,21 @@ export type OwnershipFilter = 'all' | 'owned' | 'missing';
 
 /** Best Build 充能模式：'all' = 跨充能探索（单一评分群体，总分可比）；'0'..'3' = 只看该等级 */
 export type ChargeMode = 'all' | '0' | '1' | '2' | '3';
+export type MobileStep = 'assembly' | 'materials' | 'result';
 
 export interface AppState {
   /** 当前装配的装备类型（null = 未选） */
   gearTypeId: string | null;
   /** 每必填槽选中的材料 + 该槽品级（MaterialChoice：品级逐槽，与游戏一致；grade 缺省 = NONE） */
   materialChoices: Partial<Record<PartTypeId, MaterialChoice>>;
+  /** Best Build 应用后的动态复合材料子材料；仅 materials.length >= 2 的槽存在。 */
+  compoundChoices: Partial<Record<PartTypeId, MaterialChoice[]>>;
   /** Best Build 搜索的全局品级（独立配置，不进装配计算；装配每槽品级见 materialChoices[slot].grade） */
   grade: GradeLevel;
   chargeLevel: number;
   damageRatio: number;
+  /** 窄屏工作流当前步骤；桌面布局忽略。 */
+  mobileStep: MobileStep;
   /** 当前选中的装配槽（Material Selector 的作用目标）；null = 未选 */
   selectedSlot: PartTypeId | null;
   /** 材料选择器搜索词 */
@@ -47,9 +52,11 @@ export interface AppState {
 export const initialState: AppState = {
   gearTypeId: null,
   materialChoices: {},
+  compoundChoices: {},
   grade: 'NONE',
   chargeLevel: 0,
   damageRatio: 1,
+  mobileStep: 'assembly',
   selectedSlot: null,
   search: '',
   ownershipFilter: 'all',
@@ -84,7 +91,9 @@ export function update(patch: Partial<AppState>): void {
 export function resetSelection(): void {
   update({
     materialChoices: {},
+    compoundChoices: {},
     selectedSlot: null,
+    mobileStep: 'assembly',
     search: '',
     bestBuilds: null,
     bestProfile: null,

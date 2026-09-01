@@ -15,8 +15,8 @@ import { GRADE_LEVELS } from '../grade.js';
 
 const FILTERS: { value: OwnershipFilter; label: string }[] = [
   { value: 'all', label: '全部' },
-  { value: 'owned', label: 'Owned' },
-  { value: 'missing', label: 'Missing' },
+  { value: 'owned', label: '已拥有' },
+  { value: 'missing', label: '未拥有' },
 ];
 
 export function mountMaterialSelector(mount: HTMLElement): void {
@@ -72,7 +72,7 @@ export function mountMaterialSelector(mount: HTMLElement): void {
 
     // 充能（整件固定配置，与 Optimizer 口径一致）+ 品级（该槽）同一横，不上下堆叠
     const cfgRow = el('div', 'row');
-    cfgRow.append(el('label', '', '充能'));
+    cfgRow.append(el('label', '', '星光充能'));
     cfgRow.append(
       makeSelect(
         ['0', '1', '2', '3'].map((n) => ({ value: n, label: `Lv.${n}` })),
@@ -96,11 +96,22 @@ export function mountMaterialSelector(mount: HTMLElement): void {
           const choice = state.materialChoices[slot];
           const id = choice?.id ?? slotMaterials[0]?.id;
           if (!id) return;
+          const compound = state.compoundChoices[slot];
+          const nextCompounds = { ...state.compoundChoices };
+          if (compound && compound.length >= 2) {
+            nextCompounds[slot] = compound.map((mc) => {
+              const next = { ...mc };
+              if (v === 'NONE') delete next.grade;
+              else next.grade = v as GradeLevel;
+              return next;
+            });
+          }
           update({
             materialChoices: {
               ...state.materialChoices,
               [slot]: v === 'NONE' ? { id } : { id, grade: v as GradeLevel },
             },
+            compoundChoices: nextCompounds,
           });
         },
       ),
@@ -113,8 +124,10 @@ export function mountMaterialSelector(mount: HTMLElement): void {
       clearBtn.title = '该槽不装材料（空选）';
       clearBtn.addEventListener('click', () => {
         const next = { ...state.materialChoices };
+        const nextCompounds = { ...state.compoundChoices };
         delete next[slot];
-        update({ materialChoices: next });
+        delete nextCompounds[slot];
+        update({ materialChoices: next, compoundChoices: nextCompounds });
       });
       cfgRow.append(clearBtn);
     }
@@ -153,11 +166,14 @@ export function mountMaterialSelector(mount: HTMLElement): void {
       btn.addEventListener('click', () => {
         // 换材料保留该槽已设品级（品级逐槽：grade 属于槽，不属于材料）
         const cur = state.materialChoices[slot];
+        const nextCompounds = { ...state.compoundChoices };
+        delete nextCompounds[slot]; // 主动点选单材料即退出该槽的复合结果
         update({
           materialChoices: {
             ...state.materialChoices,
             [slot]: cur?.grade && cur.grade !== 'NONE' ? { id: m.id, grade: cur.grade } : { id: m.id },
           },
+          compoundChoices: nextCompounds,
         });
       });
       grid.append(btn);

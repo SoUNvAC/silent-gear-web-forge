@@ -6,9 +6,9 @@
  *
  * 管线（gear-computation-pipeline.md §1/§3/§4）：
  *   收集（每槽位）：
- *     材质裸修正 → [grade] → [starcharged] → [crude]     （材质修正器链）
- *     复合材质（materials≥2）：compress → synergy → 部件底子加入
- *     simple 材质：直接 + 部件底子
+ *     simple 材质：裸修正 → [grade] → [starcharged] → [crude]
+ *     动态复合材质（materials≥2）：裸修正 → compress → synergy
+ *       → 复合成品 [grade] → [starcharged] → [crude] → 部件底子加入
  *     compress（同 op 压缩为一个）→ 汇入全局池
  *   三遍：Pass1 base → Pass2 bonus（trait getBonusProperties，new_1 §4）→ Pass3 final
  */
@@ -52,7 +52,16 @@ export interface SlotAssignment {
   slot: PartTypeId;
   /** 部件 id（partType 必须 = slot） */
   part: string;
-  /** 材料 id 列表；长度 ≥2 = 复合材质（走 synergy） */
+  /**
+   * 多材料语义：dynamic_compound = 合金/混合材料成品；compound_part = 普通多材料零件。
+   * 长度 ≥2 且省略时，为兼容 Best Build，默认 dynamic_compound。
+   */
+  composition?: 'dynamic_compound' | 'compound_part';
+  /**
+   * 材料 id 列表。动态复合材料走 compress + synergy；
+   * 子材料上的强化会像游戏的 removeEnhancements 一样被忽略，复合成品的强化元数据
+   * 暂由第一个 MaterialChoice 承载（Best Build 会给所有子材料写相同值以兼容旧结构）。
+   */
   materials: MaterialChoice[];
 }
 
@@ -132,6 +141,21 @@ export class GearCalcEngine {
   }
 
   /**
+   * 动态复合材料的 charging_value：对子材料裸 charging_value 做同类压缩；
+   * 不经过 synergy、grade 或 crude（WEAPON_STAT_ALGORITHM.zh-CN.md §6.1/§7.3）。
+   */
+  private compoundChargingValue(slot: SlotAssignment, chain: string[]): number {
+    const mods: StatModifier[] = [];
+    for (const mc of slot.materials) {
+      const material = this.repo.getMaterial(mc.id);
+      if (!material) throw new CalcError(`未知材料: ${mc.id}`);
+      const value = this.materialChargingValue(material, slot.slot, chain);
+      mods.push({ operation: 'AVERAGE', value });
+    }
+    return weightedAverage(mods);
+  }
+
+  /**
    * 单个材质的修正（裸修正 → grade → starcharged → crude）
    * crude 只对带 CRUDE 数据组件的材料（MaterialChoice.crude=true）且 synergy 属性生效（new_1 §1）。
    */
@@ -160,7 +184,7 @@ export class GearCalcEngine {
     });
   }
 
-  /** 单槽位属性池 = 材质修正（复合材质先 compress+synergy）+ 部件底子 */
+  /** 单槽位属性池 = 材质修正 + 部件底子 */
   private buildSlotMods(
     slot: SlotAssignment,
     part: Part,
@@ -171,19 +195,46 @@ export class GearCalcEngine {
     const def = propertyDef(property);
 
     let matMods: StatModifier[] = [];
-    for (const mc of slot.materials) {
-      const material = this.repo.getMaterial(mc.id);
-      if (!material) throw new CalcError(`未知材料: ${mc.id}`);
-      matMods = matMods.concat(this.processMaterialMods(material, slot.slot, property, chain, mc.grade ?? 'NONE', chargeLevel, mc.crude === true));
-    }
+    const isDynamicCompound = slot.materials.length >= 2 && slot.composition !== 'compound_part';
+    if (isDynamicCompound) {
+      // 动态复合材料的子材料在创建时会 removeEnhancements。因此必须先收集裸值，
+      // 再 compress → synergy，最后才把 grade → starcharged → crude 施加到复合成品。
+      for (const mc of slot.materials) {
+        const material = this.repo.getMaterial(mc.id);
+        if (!material) throw new CalcError(`未知材料: ${mc.id}`);
+        matMods = matMods.concat(this.resolveFromProps(material.properties[slot.slot], property, chain));
+      }
 
-    if (slot.materials.length >= 2) {
-      // 复合材质：compress → synergy（部件底子加入之前，§6.2）
-      // S 复用公开 computeCompoundSynergy（collectCompoundSynergy + crude/rustic/synergistic traits，
-      // 后者不门控——当前数据这些 trait 的 conditions 全空，有门控语义时按 §6 再补）
       const compressed = compressModifiers(matMods);
       const s = this.computeCompoundSynergy(slot, chain);
-      matMods = [...compressed.values()].map((m) => applySynergy(m, s, def.isAffectedBySynergy));
+      const compoundGrade = slot.materials[0]?.grade ?? 'NONE';
+      const compoundCrude = slot.materials.some((mc) => mc.crude === true);
+      const q = chargeLevel > 0 ? chargeLevel * this.compoundChargingValue(slot, chain) : 0;
+
+      // starcharged 会移除成品自身的 charging_value 修正，但 q 已由未强化的复合值算出。
+      if (chargeLevel > 0 && property === 'charging_value') {
+        matMods = [];
+      } else if (def.isAffectedBySynergy && s === 1) {
+        // 忠实复刻 CompoundMaterial.getPropertyModifiers 的边界行为：它先建空列表，
+        // 仅在 S != 1 时填回压缩修正。文档 §10.1 将此标为上游可疑实现。
+        matMods = [];
+      } else {
+        matMods = [...compressed.values()].map((mod) => {
+          let m = applySynergy(mod, s, def.isAffectedBySynergy);
+          if (def.isAffectedByGrades) m = applyGrade(m, compoundGrade);
+          m = applyStarcharged(m, property, q, chargeLevel);
+          if (compoundCrude && def.isAffectedBySynergy) {
+            m = applyCrude(m, CRUDE_MIXER_PROPERTY_MULTIPLIER);
+          }
+          return m;
+        });
+      }
+    } else {
+      for (const mc of slot.materials) {
+        const material = this.repo.getMaterial(mc.id);
+        if (!material) throw new CalcError(`未知材料: ${mc.id}`);
+        matMods = matMods.concat(this.processMaterialMods(material, slot.slot, property, chain, mc.grade ?? 'NONE', chargeLevel, mc.crude === true));
+      }
     }
 
     const partMods = this.resolveFromProps(part.properties, property, chain);
@@ -212,7 +263,7 @@ export class GearCalcEngine {
    * chain 缺省 []：仅当调用方无法提供 gear type 祖先链时使用（rare 的 /gear 后缀键会解析不准，UI 总是传链）。
    */
   computeCompoundSynergy(slot: SlotAssignment, chain: string[] = []): number {
-    if (slot.materials.length < 2) return 1;
+    if (slot.materials.length < 2 || slot.composition === 'compound_part') return 1;
     const synergyTraits: SynergyTraitLevel[] = [];
     for (const mc of slot.materials) {
       const material = this.repo.getMaterial(mc.id);

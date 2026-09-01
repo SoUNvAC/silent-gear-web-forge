@@ -28,3 +28,16 @@ const STAT_ZH: Record<string, string> = {
 export function statLabel(stat: string): string {
   return STAT_ZH[stat] ?? stat;
 }
+
+/** Silent Gear 内部 property → Minecraft 面板/物品实际显示口径。 */
+export function displayedStatValue(stat: string, value: number): number {
+  if (stat === 'attack_damage') return value + 1; // 玩家基础攻击伤害通常为 1
+  if (stat === 'durability') return Math.round(value); // 最大耐久写入物品时取整
+  return value;
+}
+
+export function displayedStatLabel(stat: string): string {
+  if (stat === 'attack_damage') return '攻击伤害（手持）';
+  if (stat === 'durability') return '最大耐久';
+  return statLabel(stat);
+}
