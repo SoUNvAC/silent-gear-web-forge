@@ -716,6 +716,59 @@ button, select, input { min-height: 32px; }
 .trait { min-height: 28px; font-size: 12px; }
 
 /* 推荐区：可解释卡片，不再只显示难懂的小数分 */
+.rating-presets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 6px;
+  margin-bottom: 7px;
+}
+.rating-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 6px 8px;
+  color: var(--text);
+  text-align: left;
+  background: #292929;
+  border: 2px solid var(--border);
+  box-shadow: inset 1px 1px 0 #4a4a4a, inset -1px -1px 0 #151515;
+  cursor: pointer;
+}
+.rating-preset:hover { background: #343434; }
+.rating-preset.active {
+  color: #fff;
+  border-color: var(--gold);
+  background: #3b3420;
+  box-shadow: inset 2px 2px 0 #6e6030, inset -2px -2px 0 #1c180e;
+}
+.rating-preset strong { color: inherit; font-size: 12px; }
+.rating-preset span {
+  width: 100%;
+  color: var(--text-dim);
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rating-preset.active span { color: #d8c98f; }
+.rating-weight-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 1px 8px;
+}
+.rating-weight-title { margin-right: 2px; color: var(--text-dim); font-size: 10px; }
+.rating-weight-chip {
+  padding: 2px 5px;
+  color: #ddd;
+  font-size: 10px;
+  background: #242424;
+  border: 1px solid #4a4a4a;
+}
 .bb-settings {
   margin-bottom: 8px;
   border: 1px solid #222;
@@ -842,6 +895,9 @@ button, select, input { min-height: 32px; }
   .key-stat { min-height: 64px; }
 
   .bb-controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 7px 8px; }
+  .rating-presets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rating-preset { min-height: 58px; }
+  .rating-preset span { white-space: normal; line-height: 1.2; }
   .bb-controls .bb-check { margin-left: 0; min-height: 38px; }
   .bb-controls .bb-btn { margin-left: 0; width: 100%; }
   .recommendation-grid { grid-template-columns: 1fr; }

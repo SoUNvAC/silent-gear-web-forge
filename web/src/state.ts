@@ -8,6 +8,7 @@ import type { PartTypeId } from '../../src/data/types.js';
 import type { GradeLevel, MaterialChoice } from '../../src/calc/index.js';
 import type { RatingProfile } from '../../src/rating/index.js';
 import type { ChargeBuild } from './best-queue.js';
+import type { RatingPresetId } from './rating-presets.js';
 
 export type OwnershipFilter = 'all' | 'owned' | 'missing';
 
@@ -42,6 +43,8 @@ export interface AppState {
   bestConsiderAddons: boolean;
   /** Best Build 「考虑复合材质（synergy）」勾选框（顶级材质集内精确复合搜索） */
   bestConsiderCompound: boolean;
+  /** 智能推荐目标预设；会生成显式 RatingProfile 覆盖默认权重。 */
+  bestRatingPreset: RatingPresetId;
   bestProfile: RatingProfile | null;
   bestRunning: boolean;
   bestError: string | null;
@@ -64,6 +67,7 @@ export const initialState: AppState = {
   bestChargeMode: 'all',
   bestConsiderAddons: false,
   bestConsiderCompound: false,
+  bestRatingPreset: 'balanced',
   bestProfile: null,
   bestRunning: false,
   bestError: null,
@@ -99,6 +103,7 @@ export function resetSelection(): void {
     bestProfile: null,
     bestError: null,
     bestRunning: false,
+    bestRatingPreset: 'balanced',
     upgrades: [],
   });
 }

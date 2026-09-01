@@ -23,20 +23,24 @@ import {
 } from './best-queue.js';
 import type { CompoundSlotSet } from './best-queue.js';
 import type { GearTypeDef } from '../../src/data/types.js';
+import { buildRatingPresetProfile } from './rating-presets.js';
 
 let repo: DataRepository;
 let calc: GearCalcEngine;
+let rating: RatingEngine;
 let pickaxe: GearTypeDef;
+let knife: GearTypeDef;
 
 beforeAll(() => {
   repo = new DataRepository(loadDataFromDisk({ dataDir: 'data', gearTypesJsonPath: 'src/data/gear-types.json' }));
   const maxLevels = (JSON.parse(readFileSync('src/data/trait-max-levels.json', 'utf8')) as { maxLevels: Record<string, number> }).maxLevels;
   const ratingData = JSON.parse(readFileSync('data/rating_data.json', 'utf8'));
   calc = new GearCalcEngine(repo, maxLevels);
-  const rating = new RatingEngine(repo, transformUserRatingData(ratingData));
+  rating = new RatingEngine(repo, transformUserRatingData(ratingData));
   const optimizer = new GearOptimizer({ repo, calc, rating });
   initContext(repo, calc, rating, optimizer, {} as never);
   pickaxe = repo.getGearType('silentgear:pickaxe')!;
+  knife = repo.getGearType('silentgear:knife')!;
 });
 
 const slot = (id: string, materials: string[]) => ({
@@ -159,4 +163,15 @@ describe('bestWithCompound', () => {
     const r = bestWithCompound(pickaxe, 'NONE', 1, 3, [0], pool, true);
     expect(r.builds.length).toBeGreaterThan(0);
   });
+
+  it('回归：小刀 SSS/充能3/附属/复合的高伤害不得低于综合推荐', () => {
+    const base = rating.resolveProfile(knife.id);
+    const balanced = buildRatingPresetProfile(repo, knife.id, 'balanced', base);
+    const damage = buildRatingPresetProfile(repo, knife.id, 'damage', base);
+    const balancedResult = bestWithCompound(knife, 'SSS', 1, 1, [3], undefined, true, balanced);
+    const damageResult = bestWithCompound(knife, 'SSS', 1, 1, [3], undefined, true, damage);
+    const balancedDamage = balancedResult.builds[0]!.stats.final.attack_damage ?? 0;
+    const focusedDamage = damageResult.builds[0]!.stats.final.attack_damage ?? 0;
+    expect(focusedDamage).toBeGreaterThanOrEqual(balancedDamage);
+  }, 20_000);
 });

@@ -22,6 +22,7 @@ import { initContext, repo, optimizer } from './context.js';
 import type { AssetRegistry } from './assets/registry.js';
 import type { GradeLevel } from '../../src/calc/index.js';
 import type { PartTypeId } from '../../src/data/types.js';
+import type { RatingProfile } from '../../src/rating/index.js';
 import { bestAcrossCharges, bestWithAddons, bestWithCompound } from './best-queue.js';
 import type { AcrossChargesResult, ChargeBuild } from './best-queue.js';
 
@@ -35,6 +36,8 @@ export interface BestComputeRequest {
   topN: number;
   chargeLevels: readonly number[];
   materialPool?: Partial<Record<PartTypeId, string[]>>;
+  /** 用户在推荐区选择的显式权重 profile；所有搜索分支必须使用同一份。 */
+  profile?: RatingProfile | null;
   /** 仅 compound 用：复合装配同时并入附属组合 */
   addons?: boolean;
 }
@@ -79,6 +82,7 @@ export function dispatchBestCompute(req: BestComputeRequest): AcrossChargesResul
       chargeLevel: lv,
       damageRatio: req.damageRatio,
       materialPool: req.materialPool,
+      profile: req.profile,
     });
     if (r.builds.length === 0) throw new Error('无候选 Build');
     const builds: ChargeBuild[] = [...r.builds]
@@ -87,12 +91,12 @@ export function dispatchBestCompute(req: BestComputeRequest): AcrossChargesResul
     return { builds, profile: r.profile };
   }
   if (req.kind === 'compound') {
-    return bestWithCompound(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool, req.addons);
+    return bestWithCompound(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool, req.addons, req.profile);
   }
   if (req.kind === 'addons') {
-    return bestWithAddons(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool);
+    return bestWithAddons(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool, req.profile);
   }
-  return bestAcrossCharges(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool);
+  return bestAcrossCharges(gearType, req.grade, req.damageRatio, req.topN, req.chargeLevels, req.materialPool, req.profile);
 }
 
 ctx.onmessage = (ev: MessageEvent<WorkerInMessage>) => {

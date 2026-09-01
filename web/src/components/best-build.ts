@@ -7,7 +7,7 @@
  * 切到具体等级走 optimizer.optimize 单次。两者都只用公开引擎 API，引擎零改动。
  * 三槽类型全池超候选上限 → 捕获 OptimizerError 显示提示，不白屏。
  */
-import { repo, calc, assets } from '../context.js';
+import { repo, calc, rating, assets } from '../context.js';
 import { state, update, subscribe } from '../state.js';
 import type { ChargeMode } from '../state.js';
 import { gearTypeName, materialName, slotName, traitName } from '../names.js';
@@ -25,6 +25,12 @@ import { buildChoicesFromBuild, buildCompoundChoicesFromBuild } from '../selecti
 import { notOwnedIds } from '../owned.js';
 import { GRADE_LEVELS } from '../grade.js';
 import type { Material, PartTypeId } from '../../../src/data/types.js';
+import {
+  availableRatingPresets,
+  buildRatingPresetProfile,
+  normalizedWeightSummary,
+  ratingPresetLabel,
+} from '../rating-presets.js';
 
 /** 队列长度（PvZ 种子槽 6 → 12，用户要求不只 6 个选项） */
 const TOP_N = 12;
@@ -39,7 +45,7 @@ const errCache = new Map<string, string>();
 
 function cacheKey(): string {
   // 拥有权指纹进键：库存点灭材质后键变化 → 旧结果不复用（配合「刷新」按钮强制重算）
-  return `${state.gearTypeId}|${state.grade}|${state.bestChargeMode}|${state.bestConsiderAddons}|${state.bestConsiderCompound}|${notOwnedIds().join(',')}`;
+  return `${state.gearTypeId}|${state.grade}|${state.bestChargeMode}|${state.bestConsiderAddons}|${state.bestConsiderCompound}|${state.bestRatingPreset}|${notOwnedIds().join(',')}`;
 }
 
 /** 计算令牌：结果回来时若已过期（换类型/改配置触发了新计算），只入缓存不刷新 UI */
@@ -52,8 +58,9 @@ function computeBest(gearTypeId: string): void {
   const mode = state.bestChargeMode;
   const addons = state.bestConsiderAddons;
   const compound = state.bestConsiderCompound;
+  const preset = state.bestRatingPreset;
   // 内部缓存键与 cacheKey() 同口径（含拥有权指纹 + 附属 + 复合）——修掉旧版「内部键缺指纹 → 命中陈旧缓存」隐患
-  const key = `${gearTypeId}|${grade}|${mode}|${addons}|${compound}|${notOwnedIds().join(',')}`;
+  const key = `${gearTypeId}|${grade}|${mode}|${addons}|${compound}|${preset}|${notOwnedIds().join(',')}`;
   const cached = cache.get(key);
   if (cached) {
     update({ bestBuilds: cached.builds, bestProfile: cached.profile, bestRunning: false, bestError: null });
@@ -71,6 +78,7 @@ function computeBest(gearTypeId: string): void {
   try {
     const gearType = repo.getGearType(gearTypeId);
     if (!gearType) throw new Error(`未知装备类型: ${gearTypeId}`);
+    const profile = buildRatingPresetProfile(repo, gearTypeId, preset, rating.resolveProfile(gearTypeId));
     // 拥有权白名单池在**主线程**算（worker 无 localStorage → isOwned 恒 true，不能自己判断拥有权）；
     // 附属模式并入 addableSlots。这步是纯数组查询，µs 级，不会卡。
     const slotIds: PartTypeId[] = addons
@@ -84,7 +92,7 @@ function computeBest(gearTypeId: string): void {
     }
     const lvs: readonly number[] = mode === 'all' ? CHARGE_LEVELS : [Number(mode)];
     const kind: BestComputeRequest['kind'] = compound ? 'compound' : addons ? 'addons' : mode === 'all' ? 'across' : 'single';
-    computeBestAsync({ kind, gearTypeId, grade, damageRatio, topN: TOP_N, chargeLevels: lvs, materialPool: pool, addons })
+    computeBestAsync({ kind, gearTypeId, grade, damageRatio, topN: TOP_N, chargeLevels: lvs, materialPool: pool, addons, profile })
       .then((r) => {
         // 结果入缓存（key 是发起时口径，缓存本身有效）；过期 → 不刷新 UI（新请求在跑）
         cache.set(key, r);
@@ -172,7 +180,7 @@ function popoverContent(gearTypeId: string, b: ChargeBuild): HTMLElement[] {
     head.append(el('span', 'pp-charge', `⚡充能 Lv.${b.chargeLevel}`));
   }
   out.push(head);
-  out.push(el('div', 'pp-profile', `评分模型：${gearTypeName(gearTypeId)}综合权重`));
+  out.push(el('div', 'pp-profile', `评分目标：${ratingPresetLabel(state.bestRatingPreset)}`));
 
   out.push(el('div', 'pp-sec', '槽位材料'));
   for (const s of b.assembly.slots) {
@@ -271,6 +279,34 @@ function controlsRow(): HTMLElement {
   return row;
 }
 
+function presetSelector(gearTypeId: string): HTMLElement {
+  const wrap = el('div', 'rating-presets');
+  wrap.setAttribute('role', 'group');
+  wrap.setAttribute('aria-label', '推荐目标');
+  for (const preset of availableRatingPresets(repo, gearTypeId)) {
+    const button = el('button', `rating-preset${state.bestRatingPreset === preset.id ? ' active' : ''}`);
+    button.type = 'button';
+    button.title = preset.description;
+    button.setAttribute('aria-pressed', String(state.bestRatingPreset === preset.id));
+    button.append(el('strong', '', preset.label), el('span', '', preset.description));
+    button.addEventListener('click', () => {
+      if (state.bestRatingPreset !== preset.id) update({ bestRatingPreset: preset.id });
+    });
+    wrap.append(button);
+  }
+  return wrap;
+}
+
+function weightSummary(profile: RatingProfile | null): HTMLElement {
+  const wrap = el('div', 'rating-weight-summary');
+  wrap.append(el('span', 'rating-weight-title', '当前权重'));
+  for (const item of normalizedWeightSummary(profile).slice(0, 5)) {
+    const label = item.property === 'harvest_tier' ? '挖掘等级' : displayedStatLabel(item.property);
+    wrap.append(el('span', 'rating-weight-chip', `${label} ${Math.round(item.weight * 100)}%`));
+  }
+  return wrap;
+}
+
 export function mountBestBuild(mount: HTMLElement): void {
   const title = el('div', 'panel-title');
   title.append(el('span', '', '智能推荐'), el('span', 'hint', '根据当前库存与装备权重计算'));
@@ -312,6 +348,9 @@ export function mountBestBuild(mount: HTMLElement): void {
     }
     const gearType = repo.getGearType(gearTypeId);
     if (!gearType) return;
+
+    const activeProfile = buildRatingPresetProfile(repo, gearTypeId, state.bestRatingPreset, rating.resolveProfile(gearTypeId));
+    body.append(presetSelector(gearTypeId), weightSummary(activeProfile));
 
     const settings = el('details', 'bb-settings') as HTMLDetailsElement;
     settings.open = settingsOpen;
@@ -376,7 +415,7 @@ export function mountBestBuild(mount: HTMLElement): void {
       if (slots.length > 0) iconBox.append(textureImg(assets.toolTexture(gearType, slots), 40));
       card.append(iconBox);
       const copy = el('div', 'recommendation-copy');
-      copy.append(el('strong', '', i === 0 ? '综合首选' : `备选方案 ${i + 1}`));
+      copy.append(el('strong', '', i === 0 ? `${ratingPresetLabel(state.bestRatingPreset)}首选` : `备选方案 ${i + 1}`));
       copy.append(el('span', 'recommendation-materials', materialSummary(b)));
       copy.append(el('span', 'recommendation-reason', recommendationReason(state.bestProfile)));
       card.append(copy);
@@ -426,6 +465,7 @@ export function mountBestBuild(mount: HTMLElement): void {
   subscribe(() => {
     const sig = [
       state.gearTypeId,
+      state.bestRatingPreset,
       state.bestRunning,
       state.bestError,
       state.bestBuilds

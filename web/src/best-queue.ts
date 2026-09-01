@@ -20,6 +20,7 @@ import type { GradeLevel, GearStats, GearAssembly } from '../../src/calc/index.j
 import type { RatingProfile } from '../../src/rating/index.js';
 import { addonSlotViews } from './selection.js';
 import { isOwned } from './owned.js';
+import { isFocusedRatingProfile } from './rating-presets.js';
 
 /** 充能等级（Silent Gear 0..3；charge III 反超现象在 Lv.3 出现） */
 export const CHARGE_LEVELS = [0, 1, 2, 3] as const;
@@ -66,6 +67,7 @@ export function bestAcrossCharges(
   topN: number,
   chargeLevels: readonly number[] = CHARGE_LEVELS,
   materialPool?: Partial<Record<PartTypeId, string[]>>,
+  profile?: RatingProfile | null,
 ): AcrossChargesResult {
   const assemblies = generateCandidates(repo, gearType.id, { grade, materialPool });
   if (assemblies.length === 0) throw new Error('候选集为空');
@@ -79,7 +81,7 @@ export function bestAcrossCharges(
     }
   }
 
-  const outcome = rating.evaluate(allStats, 'weighted');
+  const outcome = rating.evaluate(allStats, 'weighted', profile);
   const ranked = outcome.ranked ?? [];
   const builds: ChargeBuild[] = ranked.slice(0, topN).map((idx, position) => {
     const r = outcome.builds[idx]!;
@@ -174,6 +176,7 @@ export function attachAddonsToCores(
   cores: { assembly: GearAssembly; chargeLevel: number }[],
   combos: GearAssembly['slots'][],
   topN: number,
+  profile?: RatingProfile | null,
 ): AcrossChargesResult {
   const allStats: GearStats[] = [];
   const meta: { assembly: GearAssembly; chargeLevel: number }[] = [];
@@ -190,7 +193,7 @@ export function attachAddonsToCores(
   }
   if (allStats.length === 0) throw new Error('附属组合为空');
 
-  const outcome = rating.evaluate(allStats, 'weighted');
+  const outcome = rating.evaluate(allStats, 'weighted', profile);
   const ranked = outcome.ranked ?? [];
   const builds: ChargeBuild[] = ranked.slice(0, topN).map((idx, position) => {
     const r = outcome.builds[idx]!;
@@ -216,17 +219,18 @@ export function bestWithAddons(
   topN: number,
   chargeLevels: readonly number[] = CHARGE_LEVELS,
   materialPool?: Partial<Record<PartTypeId, string[]>>,
+  profile?: RatingProfile | null,
 ): AcrossChargesResult {
   const combos = ownedAddonCombos(gearType, materialPool, grade);
   const coreK = addonCoreK(combos.length, chargeLevels.length);
 
   const cores: { assembly: GearAssembly; chargeLevel: number }[] = [];
   for (const lv of chargeLevels) {
-    const core = optimizer.optimize(gearType.id, 'weighted', { topN: coreK, grade, chargeLevel: lv, damageRatio, materialPool });
+    const core = optimizer.optimize(gearType.id, 'weighted', { topN: coreK, grade, chargeLevel: lv, damageRatio, materialPool, profile });
     for (const b of core.builds) cores.push({ assembly: b.assembly, chargeLevel: lv });
   }
   if (cores.length === 0) throw new Error('核心候选为空');
-  return attachAddonsToCores(gearType, grade, damageRatio, cores, combos, topN);
+  return attachAddonsToCores(gearType, grade, damageRatio, cores, combos, topN, profile);
 }
 
 // ---------------------------------------------------------------------------
@@ -378,6 +382,7 @@ export function bestWithCompound(
   chargeLevels: readonly number[] = CHARGE_LEVELS,
   materialPool?: Partial<Record<PartTypeId, string[]>>,
   addons = false,
+  profile?: RatingProfile | null,
 ): AcrossChargesResult {
   const assemblies = generateCandidates(repo, gearType.id, { grade, materialPool });
   if (assemblies.length === 0) throw new Error('候选集为空');
@@ -390,11 +395,24 @@ export function bestWithCompound(
       meta.push({ assembly: a, chargeLevel: lv });
     }
   }
-  const baseline = rating.evaluate(allStats, 'weighted');
+  const baseline = rating.evaluate(allStats, 'weighted', profile);
   const ranked = baseline.ranked ?? [];
 
-  // 顶级材质集 + 预算收缩
-  const sets = perSlotTopSets(gearType, ranked.slice(0, COMPOUND_SET_SOURCE_K).map((idx) => ({ assembly: meta[idx]!.assembly })));
+  // 顶级材质集 + 预算收缩。
+  // 聚焦预设不能只拿自己的单材料 Top-K：某个单材可能主属性普通，却会在复合 synergy
+  // 中成为关键搭档（小刀高伤害曾因此漏掉 titanium+flint）。所以聚焦候选与综合候选取并集。
+  const seedIndices = ranked.slice(0, COMPOUND_SET_SOURCE_K);
+  if (isFocusedRatingProfile(profile)) {
+    const balanced = rating.evaluate(allStats, 'weighted', rating.resolveProfile(gearType.id));
+    const seen = new Set(seedIndices);
+    for (const idx of (balanced.ranked ?? []).slice(0, COMPOUND_SET_SOURCE_K)) {
+      if (!seen.has(idx)) {
+        seedIndices.push(idx);
+        seen.add(idx);
+      }
+    }
+  }
+  const sets = perSlotTopSets(gearType, seedIndices.map((idx) => ({ assembly: meta[idx]!.assembly })));
   const pools: Partial<Record<PartTypeId, string[]>> = {};
   for (const slot of gearType.requiredParts) pools[slot] = materialPool?.[slot] ?? fullPools(repo, gearType)[slot]!;
   const shrunk = shrinkCompoundSets(gearType, sets, pools);
@@ -413,16 +431,16 @@ export function bestWithCompound(
   if (addons) {
     const combos = ownedAddonCombos(gearType, materialPool, grade);
     const coreK = addonCoreK(combos.length, chargeLevels.length);
-    const outcome = rating.evaluate(finalStats, 'weighted');
+    const outcome = rating.evaluate(finalStats, 'weighted', profile);
     const cores = (outcome.ranked ?? []).slice(0, coreK).map((idx) => ({
       assembly: finalMeta[idx]!.assembly,
       chargeLevel: finalMeta[idx]!.chargeLevel,
     }));
     if (cores.length === 0) throw new Error('核心候选为空');
-    return attachAddonsToCores(gearType, grade, damageRatio, cores, combos, topN);
+    return attachAddonsToCores(gearType, grade, damageRatio, cores, combos, topN, profile);
   }
 
-  const outcome = rating.evaluate(finalStats, 'weighted');
+  const outcome = rating.evaluate(finalStats, 'weighted', profile);
   const finalRanked = outcome.ranked ?? [];
   const builds: ChargeBuild[] = finalRanked.slice(0, topN).map((idx, position) => {
     const r = outcome.builds[idx]!;

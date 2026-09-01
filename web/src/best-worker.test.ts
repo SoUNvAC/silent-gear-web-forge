@@ -35,6 +35,26 @@ describe('dispatchBestCompute single 模式', () => {
       if (i > 0) expect(b.total).toBeLessThanOrEqual(r.builds[i - 1]!.total);
     });
   });
+
+  it('显式预设 profile 会穿透 worker 到最终评分结果', () => {
+    const profile = {
+      id: 'preset:test:durability',
+      matches: ['silentgear:pickaxe'],
+      criteria: [{ property: 'durability', source: 'final' as const, weight: 1, priority: 1 }],
+    };
+    const r = dispatchBestCompute({
+      kind: 'single',
+      gearTypeId: 'silentgear:pickaxe',
+      grade: 'NONE',
+      damageRatio: 1,
+      topN: 4,
+      chargeLevels: [0],
+      materialPool: pool,
+      profile,
+    });
+    expect(r.profile?.id).toBe(profile.id);
+    expect(r.profile?.criteria).toEqual(profile.criteria);
+  });
 });
 
 describe('dispatchBestCompute across 模式', () => {
