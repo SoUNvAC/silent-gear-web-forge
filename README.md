@@ -4,7 +4,7 @@
 
 数据来自模组 datapack 的真实导出，计算规则按模组源码实现
 
-![](C:\Users\Administrator\Desktop\QQ20260901-225113.png)
+![预览](images/1.png)
 
 ## 功能
 
